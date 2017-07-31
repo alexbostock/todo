@@ -1,0 +1,14 @@
+{
+	"name": "todo",
+	"description": "A todo list web app",
+	"license": "MIT",
+	"author": "alexbostock",
+	"homepage": "https://github.com/alexbostock/snake.js/",
+	"dependencies": {
+		"mongodb": "^2.2.30"
+	},
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/alexbostock.co.uk/todo.git"
+	}
+}
