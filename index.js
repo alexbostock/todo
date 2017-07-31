@@ -1,8 +1,13 @@
 const express = require("express");
 const app = express();
 
+const config = require("./config.js");
+const root = config.root;
+
+const controller = require("./controller/app.js");
+
 app.get("/", (req, res) => {
-	res.send("Hello, World!");
+	res.sendFile("./view/index.html", {root: root});
 });
 
 app.use(express.static("view"));
