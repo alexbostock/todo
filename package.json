@@ -6,7 +6,7 @@
 	"homepage": "https://github.com/alexbostock/snake.js/",
 	"dependencies": {
 		"express": "^4.15.3",
-		"mongodb": "^2.2.30"
+		"mongoose": "^4.11.5"
 	},
 	"repository": {
 		"type": "git",
