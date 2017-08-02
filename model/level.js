@@ -1,14 +1,21 @@
+"use strict";
+
 const levelup = require("level");
 
-const db = levelup("./data");
+const db = levelup("./model/data");
+
+function saveValue(name, value, callback) {
+	db.put(name, value, (err) => {
+		callback(! Boolean(err));
+	});
+}
 
 const addUser = (name, password, callback) => {
 	const value = {
 		username: name,
-		password: password
+		password: password,
+		items: []
 	}
-
-	console.log(db);
 
 	db.put(name, value, (err) => {
 		callback(! Boolean(err));
@@ -16,7 +23,15 @@ const addUser = (name, password, callback) => {
 }
 
 const changePassword = (name, password, callback) => {
-	// TODO
+	db.get(name, (err, value) => {
+		if (err) {
+			callback(false);
+		} else {
+			value.password = password;
+
+			saveValue(name, value, callback);
+		}
+	});
 }
 
 const delUser = (name, callback) => {
@@ -32,15 +47,39 @@ const getUser = (name, callback) => {
 }
 
 const addItem = (user, item, callback) => {
-	;
+	getUser(user, (ok, value) => {
+		if (ok) {
+			value.items.push(item);
+
+			saveValue(user, value, callback);
+		} else {
+			callback(ok);
+		}
+	});
 }
 
 const mutateItem = (user, index, item, callback) => {
-	;
+	getUser(user, (ok, value) => {
+		if (ok) {
+			value.items[index] = item;
+
+			saveValue(user, value, callback);
+		} else {
+			callback(ok);
+		}
+	});
 }
 
 const delItem = (user, index, callback) => {
-	;
+	getUser(user, (ok, value) => {
+		if (ok) {
+			value.items.splice(index, 1);
+
+			saveValue(user, value, callback);
+		} else {
+			callback(ok);
+		}
+	});
 }
 
 module.exports.addUser = addUser;
