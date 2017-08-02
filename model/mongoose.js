@@ -30,24 +30,30 @@ process.on("SIGINT", () => {
 });
 
 const addUser = (name, password, callback) => {
-	const u = new User(name, password, []);
+	const u = new User({username: name, password: password, items: []});
 	u.save((err) => {
 		callback(! Boolean(err));
 	});
 }
 
-// TODO - everything below here
-
 const changePassword = (name, password, callback) => {
-	callback(false);
+	User.findOneAndUpdate({username: name}, {password: password}, (err) => {
+		callback(! Boolean(err);
+	});
 }
 
 const delUser = (name, callback) => {
-	callback(false);
+	User.findOneAndRemove({username: name}, (err) => {
+		callback(! Boolean(err));
+	});
 }
 
 const getUser = (name, callback) => {
-	callback(false);
+	const query = User.find({username: name});
+
+	query.exec((err, docs) => {
+		callback(docs);
+	});
 }
 
 const addItem = (user, json, callback) => {
