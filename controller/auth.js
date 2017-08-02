@@ -4,7 +4,7 @@ const uniqid = require("uniqid");
 const hash = (password, callback) => {
 	passwordLib.hash(uniqid(), (err, hash) => {
 		if (error) {
-			throw new Error("Failed to hash password!");
+			return "";	// Falsy value indicates failure
 		} else {
 			callback(hash);
 		}
