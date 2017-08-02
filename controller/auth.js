@@ -1,9 +1,17 @@
 const passwordLib = require("password-hash-and-salt");
-const uniqid = require("uniqid");
+
+function genSalt() {
+	salt = Math.random() * 65536;
+	salt = Math.floor(salt);
+	
+	return salt.toString(16);
+}
 
 const hash = (password, callback) => {
-	passwordLib.hash(uniqid(), (err, hash) => {
-		if (error) {
+	salt = genSalt();
+
+	passwordLib(password).hash(salt, (err, hash) => {
+		if (err) {
 			return "";	// Falsy value indicates failure
 		} else {
 			callback(hash);

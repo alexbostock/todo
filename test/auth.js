@@ -8,7 +8,11 @@ auth.hash("password", (hash) => {
 	});
 
 	auth.verify("Password", hash, (ok) => {
-		console.log(ok);
+		console.log(!ok);
+	});
+
+	auth.verify("xxxxx", hash, (ok) => {
+		console.log(!ok);
 	});
 });
 
