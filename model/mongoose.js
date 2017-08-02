@@ -5,18 +5,14 @@ const ObjectId = Schema.ObjectId;
 
 const url = "mongodb://localhost:27017/todo";
 
-const User = new Schema({
-	username: String,
-	password: String,
-	salt: String,
-	items: [ObjectId]
-});
-
-const Item = new Schema({
+const itemSchema = new Schema({
+	user: String,
 	heading: String,
 	body: String,
 	done: Boolean
 });
+
+const Item = mongoose.model("Item", itemSchema);
 
 mongoose.createConnection(url);
 
