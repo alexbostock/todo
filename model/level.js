@@ -8,38 +8,40 @@ const addUser = (name, password, callback) => {
 		password: password
 	}
 
+	console.log(db);
+
 	db.put(name, value, (err) => {
 		callback(! Boolean(err));
 	});
-});
+}
 
 const changePassword = (name, password, callback) => {
 	// TODO
-});
+}
 
 const delUser = (name, callback) => {
 	db.del(name, (err) => {
 		callback(! Boolean(err));
 	});
-});
+}
 
 const getUser = (name, callback) => {
 	db.get(name, (err, value) => {
 		callback(! Boolean(err), value);
 	});
-});
+}
 
 const addItem = (user, item, callback) => {
 	;
-});
+}
 
 const mutateItem = (user, index, item, callback) => {
 	;
-});
+}
 
 const delItem = (user, index, callback) => {
 	;
-});
+}
 
 module.exports.addUser = addUser;
 module.exports.changePassword = changePassword;
