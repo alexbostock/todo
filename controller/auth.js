@@ -1,5 +1,5 @@
 const passwordLib = require("password-hash-and-salt");
-const uniqid = require("require");
+const uniqid = require("uniqid");
 
 const hash = (password, callback) => {
 	passwordLib.hash(uniqid(), (err, hash) => {
@@ -8,13 +8,13 @@ const hash = (password, callback) => {
 		} else {
 			callback(hash);
 		}
-	}
+	});
 }
 
 const verify = (password, hash, callback) => {
 	passwordLib(password).verifyAgainst(hash, (err, verified) => {
 		callback(verified && ! err);
-	}
+	});
 }
 
 module.exports.hash = hash;
