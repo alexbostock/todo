@@ -18,5 +18,5 @@ const Item = new Schema({
 	done: Boolean
 });
 
-mongoose.connect(url);
+mongoose.createConnection(url);
 
