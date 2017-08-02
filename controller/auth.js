@@ -1,7 +1,7 @@
 const passwordLib = require("password-hash-and-salt");
 
 function genSalt() {
-	salt = Math.random() * 65536;
+	salt = Math.random() * 65536 * 65536;
 	salt = Math.floor(salt);
 	
 	return salt.toString(16);
