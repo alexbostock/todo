@@ -5,6 +5,7 @@
 	"author": "alexbostock",
 	"homepage": "https://github.com/alexbostock/snake.js/",
 	"dependencies": {
+		"cookie-parser": "^1.4.3",
 		"express": "^4.15.3",
 		"level": "^1.7.0",
 		"password-hash-and-salt": "^0.1.4"

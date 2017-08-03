@@ -3,18 +3,24 @@
 const express = require("express");
 const app = express();
 
+app.enable("trust proxy");
+
 const config = require("./config.js");
 const root = config.root;
 
 const controller = require("./controller/app.js");
 
-app.use((req, res, next) => {
-	// Log ip address
+const cookieParser = require("cookie-parser
 
-	console.log(req.headers['x-forwarded-for']);
-	
-	next();
-});
+app.use(cookieParse());
+
+app.use((req, res, next) => {
+	controller.verify(req, (verified) => {
+		req.verified = verified;
+
+		next();
+	});
+}
 
 app.get("/", (req, res) => {
 	res.sendFile("./view/index.html", {root: root});
