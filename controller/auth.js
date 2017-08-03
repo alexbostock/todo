@@ -1,3 +1,5 @@
+"use strict";
+
 const passwordLib = require("password-hash-and-salt");
 
 function genSalt() {

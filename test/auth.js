@@ -1,3 +1,5 @@
+"use strict";
+
 const auth = require("../controller/auth");
 
 auth.hash("password", (hash) => {

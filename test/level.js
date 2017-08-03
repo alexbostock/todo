@@ -1,3 +1,5 @@
+"use strict";
+
 const store = require("../model/level");
 
 setTimeout(() => {
