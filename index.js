@@ -48,6 +48,14 @@ app.post("/settings/change-password", (req, res) => {
 	}
 });
 
+app.post("/logout", (req, res) => {
+	if (req.verifiedUser) {
+		controller.logout(req, res);
+	} else {
+		res.sendStatus(400);
+	}
+});
+
 app.delete("/settings/delete-account", (req, res) => {
 	if (req.verifedUser) {
 		controller.deletAccount(req, res);

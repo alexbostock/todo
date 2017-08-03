@@ -61,9 +61,13 @@ const addItem = (user, item, callback) => {
 const mutateItem = (user, index, item, callback) => {
 	getUser(user, (ok, value) => {
 		if (ok) {
-			value.items[index] = item;
+			if (index < value.items.length) {
+				value.items[index] = item;
 
-			saveValue(user, value, callback);
+				saveValue(user, value, callback);
+			} else {
+				callback(false);
+			}
 		} else {
 			callback(ok);
 		}

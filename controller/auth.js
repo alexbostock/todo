@@ -37,6 +37,10 @@ const hash = (password, callback) => {
 	});
 }
 
+const revokeToken = (hash) => {
+	delete sessionTokens[hash];
+}
+
 const verify = (password, hash, callback) => {
 	passwordLib(password).verifyAgainst(hash, (err, verified) => {
 		callback(verified && ! err);
@@ -73,6 +77,7 @@ const verifyToken = (hash, ip, callback) => {
 
 module.exports.genToken = genToken;
 module.exports.hash = hash;
+module.exports.revokeToken = revokeToken;
 module.exports.verify = verify;
 module.exports.verifyToken = verifyToken;
 
