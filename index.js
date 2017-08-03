@@ -8,6 +8,14 @@ const root = config.root;
 
 const controller = require("./controller/app.js");
 
+app.use((req, res, next) => {
+	// Log ip address
+
+	console.log(req.headers['x-forwarded-for']);
+	
+	next();
+});
+
 app.get("/", (req, res) => {
 	res.sendFile("./view/index.html", {root: root});
 });
