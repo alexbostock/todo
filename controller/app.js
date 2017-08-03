@@ -110,7 +110,7 @@ const verify = (req, callback) => {
 	const ip = req.ip;
 	const token = req.cookies.token;
 
-	auth.verifyToken(token, ip, (verifedUser) => {
+	auth.verifyToken(token, ip, (verifiedUser) => {
 		callback(verifiedUser);
 	});
 }

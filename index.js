@@ -22,7 +22,7 @@ app.use((req, res, next) => {
 
 		next();
 	});
-}
+});
 
 app.get("/", (req, res) => {
 	res.sendFile("./view/index.html", {root: root});
@@ -67,7 +67,7 @@ app.put("/add", (req, res) => {
 app.put("/mutate", (req, res) => {
 	if (req.verifedUser) {
 		controller.mutateItem(req, res);
-	} else [
+	} else {
 		res.sendStatus(403);
 	}
 });
