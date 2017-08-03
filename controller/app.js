@@ -39,19 +39,25 @@ const changePassword = (req, res) => {
 	const oldPassword = req.body.oldPassword;
 	const newPassword = req.body.newPassword;
 
-	checkPassword(email, oldPassword, (ok) => {
-		if (ok) {
-			store.changePassword(email, newPassword, (ok) => {
-				if (ok) {
-					res.sendStatus(200);
-				} else {
-					storeAccessError(res);
-				}
-			});
-		} else {
-			res.sendStatus(403);
-		}
-	});
+	if (newPassword.length < 12) {
+		// No friendly message - primarily enforce this on client-side
+
+		res.sendStatus(400);
+	} else {
+		checkPassword(email, oldPassword, (ok) => {
+			if (ok) {
+				store.changePassword(email, newPassword, (ok) => {
+					if (ok) {
+						res.sendStatus(200);
+					} else {
+						storeAccessError(res);
+					}
+				});
+			} else {
+				res.sendStatus(403);
+			}
+		});
+	}
 }
 
 const deleteAccount = (req, res) => {
