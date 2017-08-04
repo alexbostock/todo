@@ -33,6 +33,14 @@ app.post("/signin", (req, res) => {
 });
 
 app.post("/forgot-password", (req, res) => {
+	// TODO
+
+	res.sendStatus(501);
+});
+
+app.post("/reset-password", (req,res) => {
+	// TODO
+
 	res.sendStatus(501);
 });
 

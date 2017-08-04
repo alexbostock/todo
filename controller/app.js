@@ -169,6 +169,8 @@ const signup = {
 	const email = req.body.user;
 	const password = req.body.password;
 
+	// TODO - confirm email
+
 	if (email && password) {
 		store.getUser(email, (ok, value) => {
 			if (ok) {
