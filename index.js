@@ -24,10 +24,6 @@ app.use((req, res, next) => {
 	});
 });
 
-app.get("/", (req, res) => {
-	res.sendFile("./view/index.html", {root: root});
-});
-
 app.post("/signup", (req, res) => {
 	res.sendStatus(501);
 });
@@ -36,7 +32,7 @@ app.post("/signin", (req, res) => {
 	res.sendStatus(501);
 });
 
-app.post("/signin/forgot-password", (req, res) => {
+app.post("/forgot-password", (req, res) => {
 	res.sendStatus(501);
 });
 

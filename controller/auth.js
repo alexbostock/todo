@@ -72,6 +72,8 @@ const verifyToken = (hash, ip, callback) => {
 			callback(false);
 		} else {
 			passwordLib(email + ip).verifyAgainst(hash, (err, verified) => {
+				lastUsed[hash] = timeNow;
+
 				if (verified && ! err) {
 					callback(email);
 				} else {

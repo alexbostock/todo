@@ -133,6 +133,38 @@ const mutateItem = (req, res) => {
 	}
 }
 
+const signin = (req, res) => {
+	const email = req.body.user;
+	const password = req.body.password;
+
+	if (email && password) {
+		store.getUser(email, (ok, user) => {
+			if (ok) {
+				const hash = user.password;
+
+				auth.verify(password, hash, (ok) => {
+					if (ok) {
+						auth.genToken(email, req.ip, (hash) => {
+							if (hash) {
+								res.cookie("token", hash);
+							} else {
+								res.sendStatus(500);
+							}
+						});
+					} else {
+						res.sendStatus(400);
+					}
+				});
+
+			} else {
+				res.sendStatus(400);
+			}
+		});
+	} else {
+		res.sendStatus(400);
+	}
+}
+
 const verify = (req, callback) => {
 	const ip = req.ip;
 	const token = req.cookies.token;
@@ -148,5 +180,6 @@ module.exports.deleteAccount = deleteAccount;
 module.exports.deleteItem = deleteItem;
 module.exports.logout = logout;
 module.exports.mutateItem = mutateItem;
+module.exports.signin = signin;
 module.exports.verify = verify;
 
