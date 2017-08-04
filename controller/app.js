@@ -165,6 +165,35 @@ const signin = (req, res) => {
 	}
 }
 
+const signup = {
+	const email = req.body.user;
+	const password = req.body.password;
+
+	if (email && password) {
+		store.getUser(email, (ok, value) => {
+			if (ok) {
+				res.sendStatus(410);	// "Gone" - Already registered
+			} else {
+				auth.hash(password, (hash) => {
+					if (hash) {
+						store.addUser(email, hash, (ok) => {
+							if (ok) {
+								signin(req, res);
+							} else {
+								res.sendStatus(500);
+							}
+						});
+					} else {
+						res.sendStatus(500);
+					}
+				});
+			}
+		});
+	} else {
+		res.sendStatus(400);
+	}
+}
+
 const verify = (req, callback) => {
 	const ip = req.ip;
 	const token = req.cookies.token;
@@ -181,5 +210,6 @@ module.exports.deleteItem = deleteItem;
 module.exports.logout = logout;
 module.exports.mutateItem = mutateItem;
 module.exports.signin = signin;
+module.exports.signup = signup;
 module.exports.verify = verify;
 

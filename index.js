@@ -25,11 +25,11 @@ app.use((req, res, next) => {
 });
 
 app.post("/signup", (req, res) => {
-	res.sendStatus(501);
+	controller.signup(req, res);
 });
 
 app.post("/signin", (req, res) => {
-	res.sendStatus(501);
+	controller.signin(req, res);
 });
 
 app.post("/forgot-password", (req, res) => {
