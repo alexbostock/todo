@@ -2,7 +2,7 @@
 
 const levelup = require("level");
 
-const db = levelup("./model/data");
+const db = levelup("./data");
 
 function saveValue(name, value, callback) {
 	db.put(name, value, (err) => {
@@ -85,6 +85,12 @@ const delItem = (user, index, callback) => {
 		}
 	});
 }
+
+process.on("SIGINT", () => {
+	db.close();
+
+	process.exit(0);
+});
 
 module.exports.addUser = addUser;
 module.exports.changePassword = changePassword;

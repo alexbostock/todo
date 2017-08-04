@@ -35,6 +35,7 @@ const addItem = (req, res) => {
 		});
 	} else {
 		res.sendStatus(400);
+	}
 }
 
 const changePassword = (req, res) => {
@@ -112,6 +113,7 @@ const logout = (req, res) => {
 	}
 
 	auth.revoke(token);
+}
 
 const mutateItem = (req, res) => {
 	const email = req.verifedUser;
