@@ -88,7 +88,7 @@ app.delete("/delete", (req, res) => {
 	}
 });
 
-app.use(express.static("view"));
+app.use(express.static(root + "/view"));
 
 app.use((req, res) => {
 	res.sendStatus(400);
