@@ -3,6 +3,7 @@
 const passwordLib = require("password-hash-and-salt");
 
 const sessionTokens = {};
+const lastUsed = {};
 
 function genSalt() {
 	salt = Math.random() * 65536 * 65536;
@@ -19,6 +20,7 @@ const genToken = (email, ip, callback) => {
 			callback("");
 		} else {
 			sessionTokens[hash] = email;
+			lastUsed[hash] = timestamp;
 
 			callback(hash);
 		}
@@ -39,6 +41,7 @@ const hash = (password, callback) => {
 
 const revokeToken = (hash) => {
 	delete sessionTokens[hash];
+	delete lastUsed[hash];
 }
 
 const verify = (password, hash, callback) => {
@@ -55,12 +58,16 @@ const verifyToken = (hash, ip, callback) => {
 	} else {
 		const timestamp = hash.split("$")[3];
 
-		const timeElapsed = Date.now() - parseInt(timestamp, 16);
-	
-		const maxTime = 1000 * 60 * 60 * 24 * 30	// 30 days
+		const timeNow = Date.now();
 
-		if (timeElapsed > maxTime) {
-			delete sessionTokens[hash];
+		const timeElapsed = timeNow - parseInt(timestamp, 16);
+		const sinceLast = lastUsed[hash];
+	
+		const maxTime = 1000 * 60 * 60 * 24 * 30;	// 30 days
+		const maxSinceLast = 1000 * 60 * 60;
+
+		if (timeElapsed > maxTime || sinceLast > maxSinceLast) {
+			revokeToken(hash);
 
 			callback(false);
 		} else {
