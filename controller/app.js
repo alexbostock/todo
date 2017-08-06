@@ -1,6 +1,7 @@
 "use strict";
 
 const auth = require("./auth");
+const mail = require("./mail");
 const store = require("../model/level");
 
 function checkPassword(user, password, callback) {
@@ -97,6 +98,37 @@ const deleteItem = (req, res) => {
 				storeAccessError(res);
 			}
 		});
+	} else {
+		res.sendStatus(400);
+	}
+}
+
+const forgotPassword = (req, res) => {
+	const email = req.body.user;
+
+	if (email) {
+		store.getUser(email, (ok, account) => {
+			if (ok) {
+				const token = auth.getResetToken(email);
+
+				const link = "https://todo.alexbostock.co.uk/reset-password/" + token;
+
+				let message = "A password reset was requested for this account.\n";
+				message += "If this was you, follow the link below.\n";
+				message += "If this wasn't you, ignore this message\n";
+				message += "The link will expire in one hour\n\n";
+				message += link;
+
+				mail.send(email, "Todo Password Reset", message, (ok) => {
+					if (ok) {
+						res.sendStatus(200);
+					} else {
+						res.sendStatus(500);
+					}
+				});
+			} else {
+				res.sendStatus(400);
+			}
 	} else {
 		res.sendStatus(400);
 	}
@@ -209,6 +241,7 @@ module.exports.addItem = addItem;
 module.exports.changePassword = changePassword;
 module.exports.deleteAccount = deleteAccount;
 module.exports.deleteItem = deleteItem;
+module.exports.forgotPassword = forgotPassword;
 module.exports.logout = logout;
 module.exports.mutateItem = mutateItem;
 module.exports.signin = signin;

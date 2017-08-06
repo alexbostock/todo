@@ -5,11 +5,44 @@ const passwordLib = require("password-hash-and-salt");
 const sessionTokens = {};
 const lastUsed = {};
 
+const resetTokens = {};
+
 function genSalt() {
 	salt = Math.random() * 65536 * 65536;
 	salt = Math.floor(salt);
 	
-	return salt.toString(16);
+	return leftPad(salt.toString(16), 64);
+}
+
+function leftPad(s, length) {
+	while (s.length < length) {
+		s = "0" + s;
+	}
+
+	return s;
+}
+
+const checkResetToken = (email, token) => {
+	const correct = resetToken[email];
+
+	if (correct === token) {
+		const timeElapsed = Date.now() - parseInt(correct.substring(64), 16);
+		const maxTime = 1000 * 60 * 60	// 1 hour
+
+		if (timeElapsed < maxTime) {
+			return true;
+		} else {
+			deleteResetToken(email);
+
+			return false;
+		}
+	} else {
+		return false;
+	}
+}
+
+const deleteResetToken = (email) => {
+	delete resetToken[email];
 }
 
 const genToken = (email, ip, callback) => {
@@ -25,6 +58,14 @@ const genToken = (email, ip, callback) => {
 			callback(hash);
 		}
 	});
+}
+
+const getResetToken = (email) => {
+	const token = genSalt() + Date.now().toString(16);
+
+	resetTokens[email] = token;
+
+	return token;
 }
 
 const hash = (password, callback) => {
@@ -83,7 +124,9 @@ const verifyToken = (hash, ip, callback) => {
 		}
 	}
 }
-
+module.exports.checkResetToken = checkResetToken;
+module.exports.deleteResetToken = deleteResetToken;
+module.exports.getResetToken = getResetToken;
 module.exports.genToken = genToken;
 module.exports.hash = hash;
 module.exports.revokeToken = revokeToken;
