@@ -165,6 +165,34 @@ const mutateItem = (req, res) => {
 	}
 }
 
+const resetPassword = (req, res) => {
+	const email = req.body.user;
+	const password = req.body.password;
+	const token = req.params.key;
+
+	if (auth.checkResetToken(email, token) && password.length >= 12) {
+		store.changePassword(email, password, (ok) => {
+			if (ok) {
+				res.sendStatus(200);
+			} else {
+				storeAccessError(res);
+			}
+		});
+	} else {
+		res.sendStatus(400);
+	}
+}
+
+const resetPasswordPage = (req, res) => {
+	const token = req.params.key;
+
+	if (auth.checkResetTokenExists(token)) {
+		// TODO
+	} else {
+		res.sendStatus(404);
+	}
+}
+
 const signin = (req, res) => {
 	const email = req.body.user;
 	const password = req.body.password;
@@ -244,6 +272,8 @@ module.exports.deleteItem = deleteItem;
 module.exports.forgotPassword = forgotPassword;
 module.exports.logout = logout;
 module.exports.mutateItem = mutateItem;
+module.exports.resetPassword = resetPassword;
+module.exports.resetPasswordPage = resetPasswordPage;
 module.exports.signin = signin;
 module.exports.signup = signup;
 module.exports.verify = verify;

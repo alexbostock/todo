@@ -23,16 +23,16 @@ function leftPad(s, length) {
 }
 
 const checkResetToken = (email, token) => {
-	const correct = resetToken[email];
+	const correct = resetTokens[token];
 
-	if (correct === token) {
-		const timeElapsed = Date.now() - parseInt(correct.substring(64), 16);
+	if (correct === email) {
+		const timeElapsed = Date.now() - parseInt(token.substring(64), 16);
 		const maxTime = 1000 * 60 * 60	// 1 hour
 
 		if (timeElapsed < maxTime) {
 			return true;
 		} else {
-			deleteResetToken(email);
+			deleteResetToken(token);
 
 			return false;
 		}
@@ -41,8 +41,12 @@ const checkResetToken = (email, token) => {
 	}
 }
 
-const deleteResetToken = (email) => {
-	delete resetToken[email];
+const checkResetTokenExists = (token) => {
+	return resetTokens[token];
+}
+
+const deleteResetToken = (token) => {
+	delete resetTokens[token];
 }
 
 const genToken = (email, ip, callback) => {
@@ -63,7 +67,7 @@ const genToken = (email, ip, callback) => {
 const getResetToken = (email) => {
 	const token = genSalt() + Date.now().toString(16);
 
-	resetTokens[email] = token;
+	resetTokens[token] = email;
 
 	return token;
 }
@@ -125,6 +129,7 @@ const verifyToken = (hash, ip, callback) => {
 	}
 }
 module.exports.checkResetToken = checkResetToken;
+module.exports.checkResetTokenExists = checkResetTokenExists;
 module.exports.deleteResetToken = deleteResetToken;
 module.exports.getResetToken = getResetToken;
 module.exports.genToken = genToken;

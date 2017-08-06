@@ -30,11 +30,9 @@ app.post("/signin", controller.signin);
 
 app.post("/forgot-password", controller.forgotPassword);
 
-app.post("/reset-password/:key", (req,res) => {
-	// TODO
+app.get("/reset-password/:key", controller.resetPasswordPage);
 
-	res.sendStatus(501);
-});
+app.post("/reset-password/:key", controller.resetPassword);
 
 app.post("/settings/change-password", (req, res) => {
 	if (req.verifedUser) {
