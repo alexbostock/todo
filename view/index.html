@@ -11,11 +11,12 @@
 		<div id="account">
 			{{#user}}
 				<p>{{username}}</p>
-				<p><a id="signOutButton">Sign Out</a></p>
+				<p><a id="signoutButton">Sign Out</a></p>
 			{{/user}}
 
 			{{^user}}
-				<p><a id="signInButton">Sign In</a></p>
+				<p><a id="signinButton">Sign In</a></p>
+				<p><a id="signupButton">Sign Up</a></p>
 			{{/user}}
 		</div>
 	</header>
@@ -32,5 +33,21 @@
 			{{/item}}
 		{{/user}}
 	</section>
+
+	<div id="signinForm" hidden>
+		<input type="text" class="emailInput">
+		<input type="password" class="passwordInput">
+
+		<input type="button" id="signinFormButton">
+	</div>
+
+	<div id="signupForm" hidden>
+		<input type="text" class="emailInput">
+		<input type="password" class="passwordInput">
+
+		<input type="button" id="signupFormButton">
+	</div>
+
+	<script src="scripts/ui.js"></script>
 </body>
 
