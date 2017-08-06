@@ -7,9 +7,30 @@
 <body>
 	<header>
 		<h1>todo</h1>
+
+		<div id="account">
+			{{#user}}
+				<p>{{username}}</p>
+				<p><a id="signOutButton">Sign Out</a></p>
+			{{/user}}
+
+			{{^user}}
+				<p><a id="signInButton">Sign In</a></p>
+			{{/user}}
+		</div>
 	</header>
 
 	<section id = "main">
+		{{#user}}
+			{{#item}}
+				<h2>{{heading}}</h2>
+				<p>{{body}}</h2>
+			{{/item}}
+
+			{{^item}}
+				<p>There's nothing here...</p>
+			{{/item}}
+		{{/user}}
 	</section>
 </body>
 

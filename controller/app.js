@@ -2,7 +2,8 @@
 
 const auth = require("./auth");
 const mail = require("./mail");
-const store = require("../model/level");
+const renderer = require("./renderer.js");
+const store = require("../model/level.js");
 
 function checkPassword(user, password, callback) {
 	store.getUser(user, (ok, user) => {
@@ -165,6 +166,20 @@ const mutateItem = (req, res) => {
 	}
 }
 
+const render = (req, res) => {
+	const email = req.verifiedUser;
+
+	const data = {};
+
+	if (email) {
+		store.getUser(email, (ok, user) => {
+			data.user = user;
+		});
+	}
+
+	res.send(renderer.render(data));
+}
+
 const resetPassword = (req, res) => {
 	const email = req.body.user;
 	const password = req.body.password;
@@ -272,6 +287,7 @@ module.exports.deleteItem = deleteItem;
 module.exports.forgotPassword = forgotPassword;
 module.exports.logout = logout;
 module.exports.mutateItem = mutateItem;
+module.exports.render = render;
 module.exports.resetPassword = resetPassword;
 module.exports.resetPasswordPage = resetPasswordPage;
 module.exports.signin = signin;

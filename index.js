@@ -24,6 +24,8 @@ app.use((req, res, next) => {
 	});
 });
 
+app.get("/", controller.render);
+
 app.post("/signup", controller.signup);
 
 app.post("/signin", controller.signin);
@@ -82,7 +84,7 @@ app.delete("/delete", (req, res) => {
 	}
 });
 
-app.use(express.static(root + "/view"));
+// app.use(express.static(root + "/view"));
 
 app.use((req, res) => {
 	res.sendStatus(400);
