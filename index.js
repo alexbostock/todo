@@ -24,17 +24,11 @@ app.use((req, res, next) => {
 	});
 });
 
-app.post("/signup", (req, res) => {
-	controller.signup(req, res);
-});
+app.post("/signup", controller.signup);
 
-app.post("/signin", (req, res) => {
-	controller.signin(req, res);
-});
+app.post("/signin", controller.signin);
 
-app.post("/forgot-password", (req, res) => {
-	controller.forgotPassword(req, res);
-});
+app.post("/forgot-password", controller.forgotPassword);
 
 app.post("/reset-password/:key", (req,res) => {
 	// TODO
