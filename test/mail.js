@@ -1,4 +1,4 @@
-"use strict"
+"use strict";
 
 const mail = require("../controller/mail.js");
 

@@ -1,6 +1,5 @@
-"use strict"
+"use strict";
 
-//const nodemailer = require("nodemailer");
 const email = require("emailjs");
 
 const config = require("../config");
