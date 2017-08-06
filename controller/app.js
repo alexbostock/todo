@@ -130,6 +130,7 @@ const forgotPassword = (req, res) => {
 			} else {
 				res.sendStatus(400);
 			}
+		});
 	} else {
 		res.sendStatus(400);
 	}
