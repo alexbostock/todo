@@ -1,19 +1,19 @@
 {
-	"name": "todo",
-	"description": "A todo list web app",
-	"license": "MIT",
-	"author": "alexbostock",
-	"homepage": "https://github.com/alexbostock/snake.js/",
-	"dependencies": {
-		"body-parser": "^1.17.2",
-		"cookie-parser": "^1.4.3",
-		"express": "^4.15.3",
-		"level": "^1.7.0",
-		"nodemailer": "^4.0.1",
-		"password-hash-and-salt": "^0.1.4"
-	},
-	"repository": {
-		"type": "git",
-		"url": "https://github.com/alexbostock.co.uk/todo.git"
-	}
+  "name": "todo",
+  "description": "A todo list web app",
+  "license": "MIT",
+  "author": "alexbostock",
+  "homepage": "https://github.com/alexbostock/snake.js/",
+  "dependencies": {
+    "body-parser": "^1.17.2",
+    "cookie-parser": "^1.4.3",
+    "emailjs": "^1.0.11",
+    "express": "^4.15.3",
+    "level": "^1.7.0",
+    "password-hash-and-salt": "^0.1.4"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/alexbostock.co.uk/todo.git"
+  }
 }

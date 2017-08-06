@@ -1,38 +1,29 @@
 "use strict"
 
-const nodemailer = require("nodemailer");
+//const nodemailer = require("nodemailer");
+const email = require("emailjs");
 
 const config = require("../config");
 
-const transporter = nodemailer.createTransport({
+const server = email.server.connect({
+	user: config.mailFrom,
+	password: config.mailPassword,
 	host: config.mailServer,
-	port: 587,
-	secure: true,
-	auth: {
-		user: config.mailFrom,
-		pass: config.mailPassword
-	}
+	post: 587,
+	tls: true
 });
 
-const send = (to, subject, body, html) => {
+const send = (to, subject, body, callback) => {
 	const options = {};
 
 	options.to = to;
 	options.from = config.mailFrom;
 	options.subject = subject;
 
-	if (html) {
-		options.html = body;
-	} else {
-		options.text = body;
-	}
-
-	transporter.sendMail(options, (err, info) => {
-		if (err) {
-			console.error(err);
-		}
-
-		console.log(info);
+	options.text = body;
+	
+	server.send(options, (err, msg) => {
+		callback(! Boolean(err));
 	});
 }
 

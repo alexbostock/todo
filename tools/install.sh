@@ -26,7 +26,7 @@ echo $server"\"," >> config.js
 printf "\tmailFrom: \"" >> config.js
 echo $address"\"," >> config.js
 
-printf "\tmailPassord: \"" >> config.js
+printf "\tmailPassword: \"" >> config.js
 echo $password"\"" >> config.js
 printf "}\n\n" >> config.js
 
