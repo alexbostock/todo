@@ -165,7 +165,7 @@ const signin = (req, res) => {
 	}
 }
 
-const signup = {
+const signup = (req, res) => {
 	const email = req.body.user;
 	const password = req.body.password;
 
