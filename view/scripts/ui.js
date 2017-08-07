@@ -1,10 +1,13 @@
 "use strict";
 
 const addItemButton = document.getElementById("addItemButton");
+
 const signinButton = document.getElementById("signinButton");
 const signupButton = document.getElementById("signupButton");
 const signinFormButton = document.getElementById("signinFormButton");
 const signupFormButton = document.getElementById("signupFormButton");
+
+const signoutButton = document.getElementById("signoutButton");
 
 if (addItemButton) {
 	addItemButton.addEventListener("click", () => {
@@ -15,6 +18,20 @@ if (addItemButton) {
 if (signinButton) {
 	signinButton.addEventListener("click", () => {
 		document.getElementById("signinForm").hidden = false;
+	});
+}
+
+if (signoutButton) {
+	signoutButton.addEventListener("click", () => {
+		const xhr = new XMLHttpRequest();
+
+		xhr.onload = () => {
+			window.location.reload();
+		}
+
+		xhr.open("POST", "./logout", true);
+
+		xhr.send();
 	});
 }
 
@@ -38,7 +55,7 @@ if (signinFormButton) {
 
 		xhr.open("POST", "./signin", true);
 
-		xhr.setRequestHeader("Content-type", "application/json");
+		xhr.setRequestHeader("Content-Type", "application/json");
 
 		const data = {};
 
@@ -65,7 +82,7 @@ if (signupFormButton) {
 
 		xhr.open("POST", "./signup", true);
 
-		xhr.setRequestHeader("Content-type", "application/json");
+		xhr.setRequestHeader("Content-Type", "application/json");
 
 		const data = {};
 

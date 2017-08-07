@@ -145,8 +145,6 @@ const logout = (req, res) => {
 	} else {
 		res.sendStatus(400);
 	}
-
-	auth.revoke(token);
 }
 
 const mutateItem = (req, res) => {
