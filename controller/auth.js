@@ -20,7 +20,7 @@ const checkResetToken = (email, token) => {
 
 	if (correct === email) {
 		const timeElapsed = Date.now() - parseInt(token.substring(64), 16);
-		const maxTime = 1000 * 60 * 60	// 1 hour
+		const maxTime = 1000 * 60 * 60   // 1 hour
 
 		if (timeElapsed < maxTime) {
 			return true;
@@ -73,7 +73,7 @@ const getResetToken = (email) => {
 const hash = (password, callback) => {
 	passwordLib(password).hash((err, hash) => {
 		if (err) {
-			callback("");	// Falsy value indicates failure
+			callback("");   // Falsy value indicates failure
 		} else {
 			callback(hash);
 		}
@@ -104,8 +104,8 @@ const verifyToken = (hash, ip, callback) => {
 		const timeElapsed = timeNow - parseInt(timestamp, 16);
 		const sinceLast = timeNow - lastUsed[hash];
 	
-		const maxTime = 1000 * 60 * 60 * 24 * 30;	// 30 days
-		const maxSinceLast = 1000 * 60 * 60;	// 1 hour
+		const maxTime = 1000 * 60 * 60 * 24 * 30;   // 30 days
+		const maxSinceLast = 1000 * 60 * 60;        // 1 hour
 
 		if (timeElapsed > maxTime || sinceLast > maxSinceLast) {
 			revokeToken(hash);
