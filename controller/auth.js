@@ -7,13 +7,6 @@ const lastUsed = {};
 
 const resetTokens = {};
 
-function genSalt() {
-	salt = Math.random() * 65536 * 65536;
-	salt = Math.floor(salt);
-	
-	return leftPad(salt.toString(16), 64);
-}
-
 function leftPad(s, length) {
 	while (s.length < length) {
 		s = "0" + s;
@@ -50,7 +43,12 @@ const deleteResetToken = (token) => {
 }
 
 const genToken = (email, ip, callback) => {
-	timestamp = Date.now().toString(16);
+	let timestamp = Date.now().toString(16);
+	const length = timestamp.length;
+
+	if (length % 2 === 1) {
+		timestamp = leftPad(timestamp, length + 1);
+	}
 
 	passwordLib(email + ip).hash(timestamp, (err, hash) => {
 		if (err) {
@@ -73,9 +71,7 @@ const getResetToken = (email) => {
 }
 
 const hash = (password, callback) => {
-	salt = genSalt();
-
-	passwordLib(password).hash(salt, (err, hash) => {
+	passwordLib(password).hash((err, hash) => {
 		if (err) {
 			callback("");	// Falsy value indicates failure
 		} else {
@@ -91,7 +87,7 @@ const revokeToken = (hash) => {
 
 const verify = (password, hash, callback) => {
 	passwordLib(password).verifyAgainst(hash, (err, verified) => {
-		callback(verified && ! err);
+		callback(! err && verified);
 	});
 }
 
@@ -106,10 +102,10 @@ const verifyToken = (hash, ip, callback) => {
 		const timeNow = Date.now();
 
 		const timeElapsed = timeNow - parseInt(timestamp, 16);
-		const sinceLast = lastUsed[hash];
+		const sinceLast = timeNow - lastUsed[hash];
 	
 		const maxTime = 1000 * 60 * 60 * 24 * 30;	// 30 days
-		const maxSinceLast = 1000 * 60 * 60;
+		const maxSinceLast = 1000 * 60 * 60;	// 1 hour
 
 		if (timeElapsed > maxTime || sinceLast > maxSinceLast) {
 			revokeToken(hash);

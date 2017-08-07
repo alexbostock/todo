@@ -6,8 +6,8 @@ const renderer = require("./renderer.js");
 const store = require("../model/level.js");
 
 function checkPassword(user, password, callback) {
-	store.getUser(user, (ok, user) => {
-		if (ok) {
+	store.getUser(user, (user) => {
+		if (user) {
 			const hash = user.password;
 
 			auth.verify(password, hash, callback);
@@ -108,8 +108,8 @@ const forgotPassword = (req, res) => {
 	const email = req.body.user;
 
 	if (email) {
-		store.getUser(email, (ok, account) => {
-			if (ok) {
+		store.getUser(email, (account) => {
+			if (account) {
 				const token = auth.getResetToken(email);
 
 				const link = "https://todo.alexbostock.co.uk/reset-password/" + token;
@@ -173,12 +173,14 @@ const render = (req, res) => {
 	const data = {};
 
 	if (email) {
-		store.getUser(email, (ok, user) => {
+		store.getUser(email, (user) => {
 			data.user = user;
-		});
-	}
 
-	res.send(renderer.render(data));
+			res.send(renderer.render(data));
+		});
+	} else {
+		res.send(renderer.render(data));
+	}
 }
 
 const resetPassword = (req, res) => {
@@ -214,8 +216,8 @@ const signin = (req, res) => {
 	const password = req.body.password;
 
 	if (email && password) {
-		store.getUser(email, (ok, user) => {
-			if (ok) {
+		store.getUser(email, (user) => {
+			if (user) {
 				const hash = user.password;
 
 				auth.verify(password, hash, (ok) => {
@@ -223,7 +225,9 @@ const signin = (req, res) => {
 						auth.genToken(email, req.ip, (hash) => {
 							if (hash) {
 								res.cookie("token", hash);
+								res.sendStatus(200);
 							} else {
+								console.log("Generating token failed");
 								res.sendStatus(500);
 							}
 						});
@@ -248,8 +252,8 @@ const signup = (req, res) => {
 	// TODO - confirm email
 
 	if (email && password) {
-		store.getUser(email, (ok, value) => {
-			if (ok) {
+		store.getUser(email, (value) => {
+			if (value) {
 				res.sendStatus(410);	// "Gone" - Already registered
 			} else {
 				auth.hash(password, (hash) => {

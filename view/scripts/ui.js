@@ -9,13 +9,15 @@ document.getElementById("signupButton").addEventListener("click", () => {
 });
 
 document.getElementById("signinFormButton").addEventListener("click", () => {
-	XMLHttpRequest xhr = new XMLHttpRequest();
+	const xhr = new XMLHttpRequest();
 
 	xhr.onload = () => {
 		console.log(xhr.responseText);
 	}
 
 	xhr.open("POST", "./signin", true);
+
+	xhr.setRequestHeader("Content-type", "application/json");
 
 	const data = {};
 
@@ -28,13 +30,15 @@ document.getElementById("signinFormButton").addEventListener("click", () => {
 });
 
 document.getElementById("signupFormButton").addEventListener("click", () => {
-	XMLHttpRequest xhr = new XMLHttpRequest();
+	const xhr = new XMLHttpRequest();
 
 	xhr.onload = () => {
 		console.log(xhr.responseText);
 	}
 
 	xhr.open("POST", "./signup", true);
+
+	xhr.setRequestHeader("Content-type", "application/json");
 
 	const data = {};
 

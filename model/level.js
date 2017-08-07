@@ -11,13 +11,13 @@ function saveValue(name, value, callback) {
 }
 
 const addUser = (name, password, callback) => {
-	const value = {
-		username: name,
-		password: password,
-		items: []
-	}
+	const data = {};
 
-	db.put(name, value, (err) => {
+	data.username = name;
+	data.password = password;
+	data.items = [];
+
+	db.put(name, JSON.stringify(data), (err) => {
 		callback(! Boolean(err));
 	});
 }
@@ -27,9 +27,11 @@ const changePassword = (name, password, callback) => {
 		if (err) {
 			callback(false);
 		} else {
-			value.password = password;
+			const data = JSON.parse(value);
 
-			saveValue(name, value, callback);
+			data.password = password;
+
+			saveValue(name, JSON.stringify(data), callback);
 		}
 	});
 }
@@ -42,46 +44,56 @@ const delUser = (name, callback) => {
 
 const getUser = (name, callback) => {
 	db.get(name, (err, value) => {
-		callback(! Boolean(err), value);
+		if (err) {
+			callback("");
+		} else {
+			callback(JSON.parse(value));
+		}
 	});
 }
 
 const addItem = (user, item, callback) => {
-	getUser(user, (ok, value) => {
-		if (ok) {
-			value.items.push(item);
+	getUser(user, (value) => {
+		if (value) {
+			const data = JSON.parse(value);
 
-			saveValue(user, value, callback);
+			data.items.push(item);
+
+			saveValue(user, JSON.stringify(data), callback);
 		} else {
-			callback(ok);
+			callback(value);
 		}
 	});
 }
 
 const mutateItem = (user, index, item, callback) => {
-	getUser(user, (ok, value) => {
-		if (ok) {
-			if (index < value.items.length) {
-				value.items[index] = item;
+	getUser(user, (value) => {
+		if (value) {
+			const data = JSON.parse(value);
 
-				saveValue(user, value, callback);
+			if (index < data.items.length) {
+				data.items[index] = item;
+
+				saveValue(user, JSON.stringify(data), callback);
 			} else {
 				callback(false);
 			}
 		} else {
-			callback(ok);
+			callback(value);
 		}
 	});
 }
 
 const delItem = (user, index, callback) => {
-	getUser(user, (ok, value) => {
-		if (ok) {
-			value.items.splice(index, 1);
+	getUser(user, (value) => {
+		if (value) {
+			const data = JSON.parse(value);
 
-			saveValue(user, value, callback);
+			data.items.splice(index, 1);
+
+			saveValue(user, JSON.stringify(data), callback);
 		} else {
-			callback(ok);
+			callback(value);
 		}
 	});
 }
