@@ -51,7 +51,7 @@ if (signinFormButton) {
 			if (xhr.status === 200) {
 				window.location.reload();
 			} else {
-				forgotPasswordButton.setAttribute("hidden", false);
+				forgotPasswordButton.hidden = false;
 			}
 		}
 
@@ -118,6 +118,6 @@ forgotPasswordButton.addEventListener("click", () => {
 
 	data.user = form.getElementsByClassName("emailInput")[0].value;
 
-	xhr.send(JSON.stringify(data);
+	xhr.send(JSON.stringify(data));
 });
 

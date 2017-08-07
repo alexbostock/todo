@@ -15,6 +15,16 @@ function leftPad(s, length) {
 	return s;
 }
 
+function randomString(length) {
+	let s = "";
+
+	while (length --> 0) {
+		s += Math.floor(Math.random() * 16).toString(16);
+	}
+
+	return s;
+}
+
 const checkResetToken = (email, token) => {
 	const correct = resetTokens[token];
 
@@ -63,7 +73,7 @@ const genToken = (email, ip, callback) => {
 }
 
 const getResetToken = (email) => {
-	const token = genSalt() + Date.now().toString(16);
+	const token = randomString(16) + Date.now().toString(16);
 
 	resetTokens[token] = email;
 
