@@ -7,6 +7,8 @@ const signupButton = document.getElementById("signupButton");
 const signinFormButton = document.getElementById("signinFormButton");
 const signupFormButton = document.getElementById("signupFormButton");
 
+const forgotPasswordButton = document.getElementById("forgotPasswordButton");
+
 const signoutButton = document.getElementById("signoutButton");
 
 if (addItemButton) {
@@ -49,7 +51,7 @@ if (signinFormButton) {
 			if (xhr.status === 200) {
 				window.location.reload();
 			} else {
-				console.log(xhr.responseText);
+				forgotPasswordButton.setAttribute("hidden", false);
 			}
 		}
 
@@ -94,4 +96,28 @@ if (signupFormButton) {
 		xhr.send(JSON.stringify(data));
 	});
 }
+
+forgotPasswordButton.addEventListener("click", () => {
+	const xhr = new XMLHttpRequest();
+
+	xhr.onload = () => {
+		if (xhr.status === 200) {
+			console.log("We emailed you a link");
+		} else {
+			console.log("Account reset failed");
+		}
+	}
+
+	xhr.open("POST", "./forgot-password", true);
+
+	xhr.setRequestHeader("Content-Type", "application/json");
+
+	const data = {};
+
+	const form = document.getElementById("signinForm");
+
+	data.user = form.getElementsByClassName("emailInput")[0].value;
+
+	xhr.send(JSON.stringify(data);
+});
 
