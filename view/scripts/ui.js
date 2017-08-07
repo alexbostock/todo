@@ -1,28 +1,39 @@
 "use strict";
 
+const addItemButton = document.getElementById("addItemButton");
 const signinButton = document.getElementById("signinButton");
 const signupButton = document.getElementById("signupButton");
 const signinFormButton = document.getElementById("signinFormButton");
 const signupFormButton = document.getElementById("signupFormButton");
 
+if (addItemButton) {
+	addItemButton.addEventListener("click", () => {
+		console.log("Add item");
+	});
+}
+
 if (signinButton) {
-	document.getElementById("signinButton").addEventListener("click", () => {
+	signinButton.addEventListener("click", () => {
 		document.getElementById("signinForm").hidden = false;
 	});
 }
 
 if (signupButton) {
-	document.getElementById("signupButton").addEventListener("click", () => {
+	signupButton.addEventListener("click", () => {
 		document.getElementById("signupForm").hidden = false;
 	});
 }
 
 if (signinFormButton) {
-	document.getElementById("signinFormButton").addEventListener("click", () => {
+	signinFormButton.addEventListener("click", () => {
 		const xhr = new XMLHttpRequest();
 
 		xhr.onload = () => {
-			console.log(xhr.responseText);
+			if (xhr.status === 200) {
+				window.location.reload();
+			} else {
+				console.log(xhr.responseText);
+			}
 		}
 
 		xhr.open("POST", "./signin", true);
@@ -41,11 +52,15 @@ if (signinFormButton) {
 }
 
 if (signupFormButton) {
-	document.getElementById("signupFormButton").addEventListener("click", () => {
+	signupFormButton.addEventListener("click", () => {
 		const xhr = new XMLHttpRequest();
 
 		xhr.onload = () => {
-			console.log(xhr.responseText);
+			if (xhr.status === 200) {
+				window.location.reload();
+			} else {
+				console.log(xhr.responseText);
+			}
 		}
 
 		xhr.open("POST", "./signup", true);
