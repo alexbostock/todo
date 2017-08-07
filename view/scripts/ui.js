@@ -1,52 +1,65 @@
 "use strict";
 
-document.getElementById("signinButton").addEventListener("click", () => {
-	document.getElementById("signinForm").hidden = false;
-});
+const signinButton = document.getElementById("signinButton");
+const signupButton = document.getElementById("signupButton");
+const signinFormButton = document.getElementById("signinFormButton");
+const signupFormButton = document.getElementById("signupFormButton");
 
-document.getElementById("signupButton").addEventListener("click", () => {
-	document.getElementById("signupForm").hidden = false;
-});
+if (signinButton) {
+	document.getElementById("signinButton").addEventListener("click", () => {
+		document.getElementById("signinForm").hidden = false;
+	});
+}
 
-document.getElementById("signinFormButton").addEventListener("click", () => {
-	const xhr = new XMLHttpRequest();
+if (signupButton) {
+	document.getElementById("signupButton").addEventListener("click", () => {
+		document.getElementById("signupForm").hidden = false;
+	});
+}
 
-	xhr.onload = () => {
-		console.log(xhr.responseText);
-	}
+if (signinFormButton) {
+	document.getElementById("signinFormButton").addEventListener("click", () => {
+		const xhr = new XMLHttpRequest();
 
-	xhr.open("POST", "./signin", true);
+		xhr.onload = () => {
+			console.log(xhr.responseText);
+		}
 
-	xhr.setRequestHeader("Content-type", "application/json");
+		xhr.open("POST", "./signin", true);
 
-	const data = {};
+		xhr.setRequestHeader("Content-type", "application/json");
 
-	const form = document.getElementById("signinForm");
+		const data = {};
 
-	data.user = form.getElementsByClassName("emailInput")[0].value;
-	data.password = form.getElementsByClassName("passwordInput")[0].value;
+		const form = document.getElementById("signinForm");
 
-	xhr.send(JSON.stringify(data));
-});
+		data.user = form.getElementsByClassName("emailInput")[0].value;
+		data.password = form.getElementsByClassName("passwordInput")[0].value;
 
-document.getElementById("signupFormButton").addEventListener("click", () => {
-	const xhr = new XMLHttpRequest();
+		xhr.send(JSON.stringify(data));
+	});
+}
 
-	xhr.onload = () => {
-		console.log(xhr.responseText);
-	}
+if (signupFormButton) {
+	document.getElementById("signupFormButton").addEventListener("click", () => {
+		const xhr = new XMLHttpRequest();
 
-	xhr.open("POST", "./signup", true);
+		xhr.onload = () => {
+			console.log(xhr.responseText);
+		}
 
-	xhr.setRequestHeader("Content-type", "application/json");
+		xhr.open("POST", "./signup", true);
 
-	const data = {};
+		xhr.setRequestHeader("Content-type", "application/json");
 
-	const form = document.getElementById("signupForm");
+		const data = {};
 
-	data.user = form.getElementsByClassName("emailInput")[0].value;
-	data.password = form.getElementsByClassName("passwordInput")[0].value;
+		const form = document.getElementById("signupForm");
 
-	xhr.send(JSON.stringify(data));
-});
+		data.user = form.getElementsByClassName("emailInput")[0].value;
+		data.password = form.getElementsByClassName("passwordInput")[0].value;
+
+		xhr.send(JSON.stringify(data));
+	});
+}
 
