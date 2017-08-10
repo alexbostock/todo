@@ -43,60 +43,6 @@ if (signupButton) {
 	});
 }
 
-if (signinFormButton) {
-	signinFormButton.addEventListener("click", () => {
-		const xhr = new XMLHttpRequest();
-
-		xhr.onload = () => {
-			if (xhr.status === 200) {
-				window.location.reload();
-			} else {
-				forgotPasswordButton.hidden = false;
-			}
-		}
-
-		xhr.open("POST", "./signin", true);
-
-		xhr.setRequestHeader("Content-Type", "application/json");
-
-		const data = {};
-
-		const form = document.getElementById("signinForm");
-
-		data.user = form.getElementsByClassName("emailInput")[0].value;
-		data.password = form.getElementsByClassName("passwordInput")[0].value;
-
-		xhr.send(JSON.stringify(data));
-	});
-}
-
-if (signupFormButton) {
-	signupFormButton.addEventListener("click", () => {
-		const xhr = new XMLHttpRequest();
-
-		xhr.onload = () => {
-			if (xhr.status === 200) {
-				window.location.reload();
-			} else {
-				console.log(xhr.responseText);
-			}
-		}
-
-		xhr.open("POST", "./signup", true);
-
-		xhr.setRequestHeader("Content-Type", "application/json");
-
-		const data = {};
-
-		const form = document.getElementById("signupForm");
-
-		data.user = form.getElementsByClassName("emailInput")[0].value;
-		data.password = form.getElementsByClassName("passwordInput")[0].value;
-
-		xhr.send(JSON.stringify(data));
-	});
-}
-
 forgotPasswordButton.addEventListener("click", () => {
 	const xhr = new XMLHttpRequest();
 
@@ -121,3 +67,77 @@ forgotPasswordButton.addEventListener("click", () => {
 	xhr.send(JSON.stringify(data));
 });
 
+function signin() {
+	const xhr = new XMLHttpRequest();
+
+	xhr.onload = () => {
+		if (xhr.status === 200) {
+			window.location.reload();
+		} else {
+			forgotPasswordButton.hidden = false;
+		}
+	}
+
+	xhr.open("POST", "./signin", true);
+
+	xhr.setRequestHeader("Content-Type", "application/json");
+
+	const data = {};
+
+	const form = document.getElementById("signinForm");
+
+	data.user = form.getElementsByClassName("emailInput")[0].value;
+	data.password = form.getElementsByClassName("passwordInput")[0].value;
+
+	xhr.send(JSON.stringify(data));
+}
+
+function signup() {
+	const xhr = new XMLHttpRequest();
+
+	xhr.onload = () => {
+		if (xhr.status === 200) {
+			window.location.reload();
+		} else {
+			console.log(xhr.responseText);
+		}
+	}
+
+	xhr.open("POST", "./signup", true);
+
+	xhr.setRequestHeader("Content-Type", "application/json");
+
+	const data = {};
+
+	const form = document.getElementById("signupForm");
+
+	data.user = form.getElementsByClassName("emailInput")[0].value;
+	data.password = form.getElementsByClassName("passwordInput")[0].value;
+
+	xhr.send(JSON.stringify(data));
+}
+
+signinFormButton.addEventListener("click", signin);
+signupFormButton.addEventListener("click", signup);
+
+function signinKeypress(k) {
+	if (k.keyCode === 13) {
+		signin();
+	}
+}
+
+function signupKeypress(k) {
+	if (k.keyCode === 13) {
+		signup();
+	}
+}
+
+var form = document.getElementById("signinForm");
+
+form.getElementsByClassName("emailInput")[0].addEventListener("keypress", signinKeypress);
+form.getElementsByClassName("passwordInput")[0].addEventListener("keypress", signinKeypress);
+
+form = document.getElementById("signupForm");
+
+form.getElementsByClassName("emailInput")[0].addEventListener("keypress", signupKeypress);
+form.getElementsByClassName("passwordInput")[0].addEventListener("keypress", signupKeypress);
