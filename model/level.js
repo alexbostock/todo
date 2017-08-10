@@ -16,21 +16,21 @@ const addUser = (name, password, callback) => {
 	data.username = name;
 	data.password = password;
 	data.emailVerified = false;
-	data.items = [];
+	data.item = [];
 
 	// Default items
 	
-	items.push({
+	data.item.push({
 		heading: "Verify email address",
 		body: "An email has been sent to " + name + ". Please click on the link there to verify your address. This will you to reset your password if you forget."
 	});
 
-	items.push({
+	data.item.push({
 		heading: "Add some things to do",
 		body: "This is a todo list - that's what it's for."
 	});
 
-	items.push({
+	data.item.push({
 		heading: "Make the world a better place",
 		body: "...profit."
 	});
@@ -75,7 +75,7 @@ const addItem = (user, item, callback) => {
 		if (value) {
 			const data = JSON.parse(value);
 
-			data.items.push(item);
+			data.item.push(item);
 
 			saveValue(user, JSON.stringify(data), callback);
 		} else {
@@ -89,8 +89,8 @@ const mutateItem = (user, index, item, callback) => {
 		if (value) {
 			const data = JSON.parse(value);
 
-			if (index < data.items.length) {
-				data.items[index] = item;
+			if (index < data.item.length) {
+				data.item[index] = item;
 
 				saveValue(user, JSON.stringify(data), callback);
 			} else {
@@ -107,7 +107,7 @@ const delItem = (user, index, callback) => {
 		if (value) {
 			const data = JSON.parse(value);
 
-			data.items.splice(index, 1);
+			data.item.splice(index, 1);
 
 			saveValue(user, JSON.stringify(data), callback);
 		} else {
