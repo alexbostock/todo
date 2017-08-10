@@ -41,17 +41,23 @@
 	</main>
 
 	<div id="signinForm" hidden>
+		Email:
 		<input type="text" class="emailInput">
+
+		Password:
 		<input type="password" class="passwordInput">
 
-		<button id="signinFormButton" class="button button-outline">Sign In</button>
+		<button id="signinFormButton" name="email" class="button button-outline">Sign In</button>
 
-		<a id="forgotPasswordButton" class="button button-clear" hidden>Forgot Password?</a>
+		<a id="forgotPasswordButton" name="password" class="button button-clear" hidden>Forgot Password?</a>
 	</div>
 
 	<div id="signupForm" hidden>
-		<input type="text" class="emailInput">
-		<input type="password" class="passwordInput">
+		Email:
+		<input type="text" name="email" class="emailInput">
+
+		Password:
+		<input type="password" name="password" class="passwordInput">
 
 		<button id="signupFormButton" class="button button-outline">Sign Up</button>
 	</div>
