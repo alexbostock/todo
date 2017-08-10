@@ -15,7 +15,25 @@ const addUser = (name, password, callback) => {
 
 	data.username = name;
 	data.password = password;
+	data.emailVerified = false;
 	data.items = [];
+
+	// Default items
+	
+	items.push({
+		heading: "Verify email address",
+		body: "An email has been sent to " + name + ". Please click on the link there to verify your address. This will you to reset your password if you forget."
+	});
+
+	items.push({
+		heading: "Add some things to do",
+		body: "This is a todo list - that's what it's for."
+	});
+
+	items.push({
+		heading: "Make the world a better place",
+		body: "...profit."
+	});
 
 	db.put(name, JSON.stringify(data), (err) => {
 		callback(! Boolean(err));
