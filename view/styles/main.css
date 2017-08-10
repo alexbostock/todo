@@ -1,6 +1,18 @@
+header {
+	background-color: #F4F5F6;
+	
+	border-bottom: 0.1rem solid #D1D1D1;
+}
+
 header, main {
 	text-align: center;
 	padding: 1em;
+}
+
+main {
+	max-width: 80em;
+
+	margin: auto;
 }
 
 #signinForm, #signupForm {

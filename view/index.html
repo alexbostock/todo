@@ -14,7 +14,7 @@
 
 		<div id="account">
 			{{#user}}
-				<p>{{username}}</p>
+				<!--<p>{{username}}</p>-->
 				<p><a id="signoutButton" class="button">Sign Out</a></p>
 			{{/user}}
 
@@ -26,18 +26,40 @@
 	</header>
 
 	<main>
-		{{#user}}
-			{{#item}}
-				<h2>{{heading}}</h2>
-				<p>{{body}}</h2>
-			{{/item}}
+		<table>
+			{{#user}}
+				<thead>
+					<tr>
+						<th colspan="3">{{username}}</th>
+					</tr>
+				</thead>
 
-			{{^item}}
-				<p>There's nothing here...</p>
-			{{/item}}
+				{{#item}}
+					<tr>
+						<td>{{heading}}</td>
+						<td>{{body}}</td>
+						<td><a class="button button-clear deleteButton">Delete</a></td>
+					</tr>
+				{{/item}}
+				{{^item}}
+					<tr>
+						<td>Add something to do</td>
+						<td>Use the controls below</td>
+						<td></td>
+					</tr>
+				{{/item}}
 
-			<button id="addItemButton" class="button button-outline">New</button>
-		{{/user}}
+				<button id="saveButton" class="button button-outline" disabled>Save</button>
+				<button id="newButton" class="button button-outline">New</button>
+			{{/user}}
+			{{^user}}
+				<tr>
+					<td>Sign up for todo</td>
+					<td>Use the link above</td>
+					<td></td>
+				</td>
+			{{/user}}
+		</table>
 	</main>
 
 	<div id="signinForm" hidden>
