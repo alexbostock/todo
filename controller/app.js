@@ -172,6 +172,7 @@ const render = (req, res) => {
 
 	if (email) {
 		store.getUser(email, (user) => {
+			users.numItems = user.item.length;
 			data.user = user;
 
 			res.send(renderer.render(data));
