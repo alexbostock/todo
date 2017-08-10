@@ -15,12 +15,12 @@
 		<div id="account">
 			{{#user}}
 				<p>{{username}}</p>
-				<p><a id="signoutButton">Sign Out</a></p>
+				<p><a id="signoutButton" class="button">Sign Out</a></p>
 			{{/user}}
 
 			{{^user}}
-				<p><a id="signinButton">Sign In</a></p>
-				<p><a id="signupButton">Sign Up</a></p>
+				<p><a id="signinButton" class="button">Sign In</a></p>
+				<p><a id="signupButton" class="button">Sign Up</a></p>
 			{{/user}}
 		</div>
 	</header>
@@ -36,7 +36,7 @@
 				<p>There's nothing here...</p>
 			{{/item}}
 
-			<button id="addItemButton">New</button>
+			<button id="addItemButton" class="button button-outline">New</button>
 		{{/user}}
 	</section>
 
@@ -44,16 +44,16 @@
 		<input type="text" class="emailInput">
 		<input type="password" class="passwordInput">
 
-		<button id="signinFormButton">Sign In</button>
+		<button id="signinFormButton" class="button button-outline">Sign In</button>
 
-		<a id="forgotPasswordButton" hidden>Forgot Password?</a>
+		<a id="forgotPasswordButton" class="button button-clear" hidden>Forgot Password?</a>
 	</div>
 
 	<div id="signupForm" hidden>
 		<input type="text" class="emailInput">
 		<input type="password" class="passwordInput">
 
-		<button id="signupFormButton">Sign Up</button>
+		<button id="signupFormButton" class="button button-outline">Sign Up</button>
 	</div>
 
 	<script src="scripts/ui.js"></script>
