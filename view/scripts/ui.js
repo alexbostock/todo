@@ -20,6 +20,7 @@ if (addItemButton) {
 if (signinButton) {
 	signinButton.addEventListener("click", () => {
 		document.getElementById("signinForm").hidden = false;
+		document.getElementById("signupForm").hidden = true;
 	});
 }
 
@@ -40,6 +41,7 @@ if (signoutButton) {
 if (signupButton) {
 	signupButton.addEventListener("click", () => {
 		document.getElementById("signupForm").hidden = false;
+		document.getElementById("signinForm").hidden = true;
 	});
 }
 
