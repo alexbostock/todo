@@ -2,11 +2,11 @@
 <head>
 	<title>todo</title>
 
-	<!--<link rel="stylesheet" href="styles/main.css"/>-->
+	<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Roboto:300,300italic,700,700italic"/>
+	<link rel="stylesheet" href="./styles/normalize.css"/>
+	<link rel="stylesheet" href="./styles/milligram.min.css"/>
 
-	<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Roboto:300,300italic,700,700italic">
-	<link rel="stylesheet" href="./styles/normalize.css">
-	<link rel="stylesheet" href="./styles/milligram.min.css">
+	<link rel="stylesheet" href="./styles/main.css"/>
 </head>
 <body>
 	<header>
@@ -19,13 +19,13 @@
 			{{/user}}
 
 			{{^user}}
-				<p><a id="signinButton" class="button">Sign In</a></p>
-				<p><a id="signupButton" class="button">Sign Up</a></p>
+				<a id="signinButton" class="button">Sign In</a>
+				<a id="signupButton" class="button">Sign Up</a>
 			{{/user}}
 		</div>
 	</header>
 
-	<section id = "main">
+	<main>
 		{{#user}}
 			{{#item}}
 				<h2>{{heading}}</h2>
@@ -38,7 +38,7 @@
 
 			<button id="addItemButton" class="button button-outline">New</button>
 		{{/user}}
-	</section>
+	</main>
 
 	<div id="signinForm" hidden>
 		<input type="text" class="emailInput">
