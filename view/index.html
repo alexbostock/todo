@@ -34,23 +34,24 @@
 				</tr>
 			</thead>
 
-			{{#item}}
-				<tr>
-					<td>{{heading}}</td>
-					<td>{{body}}</td>
-					<td><a class="button button-clear deleteButton">Delete</a></td>
-				</tr>
-			{{/item}}
-			{{^item}}
-				<tr>
-					<td>Add something to do</td>
-					<td>Use the controls below</td>
-					<td></td>
-				</tr>
-			{{/item}}
+		{{#item}}
+			<tr>
+				<td>{{heading}}</td>
+				<td>{{body}}</td>
+				<td><a class="button button-clear deleteButton">Delete</a></td>
+			</tr>
+		{{/item}}
+		{{^item}}
+			<tr>
+				<td>Add something to do</td>
+				<td>Use the controls below</td>
+				<td></td>
+			</tr>
+		{{/item}}
+		</table>
 
-			<button id="saveButton" class="button button-outline" disabled>Save</button>
-			<button id="newButton" class="button button-outline">New</button>
+		<button id="saveButton" class="button button-outline" disabled>Save</button>
+		<button id="newButton" class="button button-outline">New</button>
 		{{/user}}
 		{{^user}}
 			<tr>
@@ -58,8 +59,8 @@
 				<td>Use the link above</td>
 				<td></td>
 			</td>
-		{{/user}}
 		</table>
+		{{/user}}
 	</main>
 
 	<div id="signinForm" hidden>
@@ -76,10 +77,10 @@
 
 	<div id="signupForm" hidden>
 		Email:
-		<input type="text" name="email" class="emailInput">
+		<input type="text" name="email" class="emailInput" placeholder="name@example.com">
 
 		Password:
-		<input type="password" name="password" class="passwordInput">
+		<input type="password" name="password" class="passwordInput" placeholder="at least 12 characters">
 
 		<button id="signupFormButton" class="button button-outline">Sign Up</button>
 	</div>
