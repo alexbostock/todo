@@ -60,7 +60,7 @@ app.delete("/settings/delete-account", (req, res) => {
 	}
 });
 
-app.put("/add", (req, res) => {
+app.post("/add", (req, res) => {
 	if (req.verifedUser) {
 		controller.addItem(req, res);
 	} else {

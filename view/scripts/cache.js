@@ -4,26 +4,63 @@ function Cache(email, numItems) {
 	this.email = email;
 	this.numItems = numItems;
 
-	this.news = [];
-	this.mutates = [];
-	this.removes = [];
+	const NEW = 1;
+	const MUTATE = 2;
+	const DELETE = 3;
+
+	this.changes = new Array(numItems);
 
 	this.push = () => {
-		const xhr = new XMLHttpRequest();
+		for (var i = 0; i < numItems; i++) {
+			const xhr = new XMLHttpRequest();
 
-		xhr.onload = () => {
-			if (xhr.status === 200) {
-				//
-			} else {
-				//
+			xhr.onload = () => {
+				if (xhr.status === 200) {
+					this.changes[i] = null;
+				} else {
+					console.log(status);
+				}
+			}
+
+			const change = this.changes[i];
+
+			switch (change.type) {
+			case NEW:
+				xhr.open("POST", "./add", true);
+
+				xhr.send({
+					item: {
+						heading: change.heading,
+						body: change.body
+					}
+				});
+
+				break;
+
+			case MUTATE:
+				xhr.open("PUT", "./mutate", true);
+
+				xhr.send({
+					index: i,
+					item: {
+						heading: change.heading,
+						body: change.body
+					}
+				});
+
+				break;
+
+			case DELETE:
+				xhr.open("DELETE", "./delete", true);
+
+				xhr.send({
+					index: i
+				});
+
+				break;
+
 			}
 		}
-
-		// Consolidate changes
-		
-		// xhr.open()
-		
-		xhr.send();
 	}
 
 	this.add = () => {
@@ -32,7 +69,8 @@ function Cache(email, numItems) {
 		const row = document.getElementsByTagName("tr")[id];
 		const tds = row.getElementsByTagName("td");
 
-		this.news.push({
+		this.changes.push({
+			type: NEW,
 			heading: td[0].innerText,
 			body: td[1].innerText
 		});
@@ -42,15 +80,19 @@ function Cache(email, numItems) {
 		const row = document.getElementsByTagName("tr")[id];
 		const tds = row.getElementsByTagName("td");
 
-		this.mutates[id] = {
+		this.changes[id] = {
+			type: MUTATE,
 			heading: td[0].innerText,
 			body: td[0].innerText
 		}
 
 		// TODO - should I use innerText?
+	}
 
 	this.remove = (id) => {
-		this.removes.push(id);
+		this.changes[id] = {
+			type: DELETE
+		}
 	}
 }
 
