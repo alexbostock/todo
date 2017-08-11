@@ -22,7 +22,7 @@ const addUser = (name, password, callback) => {
 	
 	data.item.push({
 		heading: "Verify email address",
-		body: "An email has been sent to " + name + ". Please click on the link there to verify your address. This will you to reset your password if you forget."
+		body: "An email has been sent to " + name + ". Please click on the link there to verify your address. This will allow you to reset your password if you forget."
 	});
 
 	data.item.push({
@@ -71,10 +71,8 @@ const getUser = (name, callback) => {
 }
 
 const addItem = (user, item, callback) => {
-	getUser(user, (value) => {
-		if (value) {
-			const data = JSON.parse(value);
-
+	getUser(user, (data) => {
+		if (data) {
 			data.item.push(item);
 
 			saveValue(user, JSON.stringify(data), callback);
@@ -85,10 +83,8 @@ const addItem = (user, item, callback) => {
 }
 
 const mutateItem = (user, index, item, callback) => {
-	getUser(user, (value) => {
-		if (value) {
-			const data = JSON.parse(value);
-
+	getUser(user, (data) => {
+		if (data) {
 			if (index < data.item.length) {
 				data.item[index] = item;
 
@@ -103,10 +99,8 @@ const mutateItem = (user, index, item, callback) => {
 }
 
 const delItem = (user, index, callback) => {
-	getUser(user, (value) => {
-		if (value) {
-			const data = JSON.parse(value);
-
+	getUser(user, (data) => {
+		if (data) {
 			data.item.splice(index, 1);
 
 			saveValue(user, JSON.stringify(data), callback);
@@ -129,4 +123,3 @@ module.exports.getUser = getUser;
 module.exports.addItem = addItem;
 module.exports.mutateItem = mutateItem;
 module.exports.delItem = delItem;
-

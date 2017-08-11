@@ -14,7 +14,6 @@
 
 		<div id="account">
 		{{#user}}
-			<!--<p>{{username}}</p>-->
 			<p><a id="signoutButton" class="button">Sign Out</a></p>
 		{{/user}}
 
@@ -36,8 +35,8 @@
 
 		{{#item}}
 			<tr>
-				<td>{{heading}}</td>
-				<td>{{body}}</td>
+				<td contenteditable>{{heading}}</td>
+				<td contenteditable>{{body}}</td>
 				<td><a class="button button-clear deleteButton">Delete</a></td>
 			</tr>
 		{{/item}}

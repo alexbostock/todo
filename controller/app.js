@@ -65,7 +65,7 @@ const changePassword = (req, res) => {
 }
 
 const deleteAccount = (req, res) => {
-	const email = req.verifedUser;
+	const email = req.verifiedUser;
 	const password = req.body.password;
 
 	if (password) {
@@ -148,11 +148,11 @@ const logout = (req, res) => {
 }
 
 const mutateItem = (req, res) => {
-	const email = req.verifedUser;
+	const email = req.verifiedUser;
 	const index = req.body.index;
 	const item = req.body.item;
 
-	if (index && item) {
+	if ((index || index === 0) && item) {
 		store.mutateItem(email, index, item, (ok) => {
 			if (ok) {
 				res.sendStatus(200);

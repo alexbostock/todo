@@ -1,5 +1,7 @@
 "use strict";
 
+const saveButton = document.getElementById("saveButton");
+
 function Cache(email, numItems) {
 	this.email = email;
 	this.numItems = numItems;
@@ -11,51 +13,66 @@ function Cache(email, numItems) {
 	this.changes = new Array(numItems);
 
 	this.push = () => {
+		let xhrs = new Array(numItems);
+
 		for (var i = 0; i < numItems; i++) {
-			const xhr = new XMLHttpRequest();
+			let change = this.changes[i];
+
+			if (! change) {
+				continue;
+			}
+
+			xhrs[i] = new XMLHttpRequest();
+
+			let xhr = xhrs[i];
 
 			xhr.onload = () => {
 				if (xhr.status === 200) {
 					this.changes[i] = null;
+
+					saveButton.disabled = true;
 				} else {
-					console.log(status);
+					console.log("Failed to push changes");
+
+					saveButton.disabled = false;
 				}
 			}
-
-			const change = this.changes[i];
 
 			switch (change.type) {
 			case NEW:
 				xhr.open("POST", "./add", true);
+				xhr.setRequestHeader("Content-Type", "application/json");
 
-				xhr.send({
+				xhr.send(JSON.stringify({
 					item: {
 						heading: change.heading,
 						body: change.body
 					}
-				});
+				}));
 
 				break;
 
 			case MUTATE:
 				xhr.open("PUT", "./mutate", true);
+				xhr.setRequestHeader("Content-Type", "application/json");
 
-				xhr.send({
+				xhr.send(JSON.stringify({
 					index: i,
 					item: {
 						heading: change.heading,
 						body: change.body
 					}
-				});
+				}));
 
 				break;
 
 			case DELETE:
 				xhr.open("DELETE", "./delete", true);
+				xhr.setRequestHeader("Content-Type", "application/json");
 
-				xhr.send({
+				xhr.send(JSON.stringify({
 					index: i
-				});
+				}));
 
 				break;
 
@@ -66,7 +83,7 @@ function Cache(email, numItems) {
 	this.add = () => {
 		const id = this.numItems++;
 
-		const row = document.getElementsByTagName("tr")[id];
+		const row = document.getElementsByTagName("tr")[id + 1];
 		const tds = row.getElementsByTagName("td");
 
 		this.changes.push({
@@ -74,25 +91,31 @@ function Cache(email, numItems) {
 			heading: td[0].innerText,
 			body: td[1].innerText
 		});
+
+		saveButton.disabled = false;
 	}
 
 	this.mutate = (id) => {
-		const row = document.getElementsByTagName("tr")[id];
+		const row = document.getElementsByTagName("tr")[id + 1];
 		const tds = row.getElementsByTagName("td");
 
 		this.changes[id] = {
 			type: MUTATE,
-			heading: td[0].innerText,
-			body: td[0].innerText
+			heading: tds[0].innerText,
+			body: tds[1].innerText
 		}
 
 		// TODO - should I use innerText?
+		
+		saveButton.disabled = false;
 	}
 
 	this.remove = (id) => {
 		this.changes[id] = {
 			type: DELETE
 		}
+
+		saveButton.disabled = false;
 	}
 }
 
@@ -102,3 +125,25 @@ const numItems = thead.getAttribute("data-num-items");
 const email = thead.getAttribute("data-email");
 
 window.cache = new Cache(email, numItems);
+
+const rows = document.getElementsByTagName("tr");
+
+for (var i = 1; i < rows.length; i++) {
+	const cells = rows[i].getElementsByTagName("td");
+
+	const index = i;
+
+	cells[0].addEventListener("keypress", () => {
+		window.cache.mutate(index - 1);
+	});
+
+	cells[1].addEventListener("keypress", () => {
+		window.cache.mutate(index - 1);
+	});
+
+	cells[2].firstChild.addEventListener("keypress", () => {
+		window.cache.delete(index - 1);
+	});
+}
+
+saveButton.addEventListener("click", cache.push);

@@ -37,7 +37,7 @@ app.get("/reset-password/:key", controller.resetPasswordPage);
 app.post("/reset-password/:key", controller.resetPassword);
 
 app.post("/settings/change-password", (req, res) => {
-	if (req.verifedUser) {
+	if (req.verifiedUser) {
 		controller.changePassword(req, res);
 	} else {
 		res.sendStatus(403);
@@ -53,7 +53,7 @@ app.post("/logout", (req, res) => {
 });
 
 app.delete("/settings/delete-account", (req, res) => {
-	if (req.verifedUser) {
+	if (req.verifiedUser) {
 		controller.deletAccount(req, res);
 	} else {
 		res.sendStatus(403);
@@ -61,7 +61,7 @@ app.delete("/settings/delete-account", (req, res) => {
 });
 
 app.post("/add", (req, res) => {
-	if (req.verifedUser) {
+	if (req.verifiedUser) {
 		controller.addItem(req, res);
 	} else {
 		res.sendStatus(403);
@@ -69,7 +69,7 @@ app.post("/add", (req, res) => {
 });
 
 app.put("/mutate", (req, res) => {
-	if (req.verifedUser) {
+	if (req.verifiedUser) {
 		controller.mutateItem(req, res);
 	} else {
 		res.sendStatus(403);
