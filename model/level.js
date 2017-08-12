@@ -35,9 +35,7 @@ const addUser = (name, password, callback) => {
 		body: "...profit."
 	});
 
-	db.put(name, JSON.stringify(data), (err) => {
-		callback(! Boolean(err));
-	});
+	saveValue(name, JSON.stringify(data), callback);
 }
 
 const changePassword = (name, password, callback) => {
@@ -70,10 +68,10 @@ const getUser = (name, callback) => {
 	});
 }
 
-const addItem = (user, item, callback) => {
+const mutateItems = (user, item, callback) => {
 	getUser(user, (data) => {
 		if (data) {
-			data.item.push(item);
+			data.item = item;
 
 			saveValue(user, JSON.stringify(data), callback);
 		} else {
@@ -81,45 +79,9 @@ const addItem = (user, item, callback) => {
 		}
 	});
 }
-
-const mutateItem = (user, index, item, callback) => {
-	getUser(user, (data) => {
-		if (data) {
-			if (index < data.item.length) {
-				data.item[index] = item;
-
-				saveValue(user, JSON.stringify(data), callback);
-			} else {
-				callback(false);
-			}
-		} else {
-			callback(value);
-		}
-	});
-}
-
-const delItem = (user, index, callback) => {
-	getUser(user, (data) => {
-		if (data) {
-			data.item.splice(index, 1);
-
-			saveValue(user, JSON.stringify(data), callback);
-		} else {
-			callback(value);
-		}
-	});
-}
-
-process.on("SIGINT", () => {
-	db.close();
-
-	process.exit(0);
-});
 
 module.exports.addUser = addUser;
 module.exports.changePassword = changePassword;
 module.exports.delUser = delUser;
 module.exports.getUser = getUser;
-module.exports.addItem = addItem;
 module.exports.mutateItem = mutateItem;
-module.exports.delItem = delItem;

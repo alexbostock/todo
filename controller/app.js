@@ -23,23 +23,6 @@ function storeAccessError(res) {
 	console.error("Failed to write to data store!");
 }
 
-const addItem = (req, res) => {
-	const email = req.verifiedUser;
-	const item = req.body.item;
-
-	if (item) {
-		store.addItem(email, item, (ok) => {
-			if (ok) {
-				res.sendStatus(200);
-			} else {
-				storeAccessError(res);
-			}
-		});
-	} else {
-		res.sendStatus(400);
-	}
-}
-
 const changePassword = (req, res) => {
 	const email = req.verifiedUser;
 	const oldPassword = req.body.oldPassword;
@@ -80,23 +63,6 @@ const deleteAccount = (req, res) => {
 				});
 			} else {
 				res.sendStatus(403);
-			}
-		});
-	} else {
-		res.sendStatus(400);
-	}
-}
-
-const deleteItem = (req, res) => {
-	const email = req.verifiedUser;
-	const index = req.body.index;
-
-	if (index) {
-		store.delItem(email, index, (ok) => {
-			if (ok) {
-				res.sendStatus(200);
-			} else {
-				storeAccessError(res);
 			}
 		});
 	} else {
@@ -147,13 +113,12 @@ const logout = (req, res) => {
 	}
 }
 
-const mutateItem = (req, res) => {
+const mutateItems = (req, res) => {
 	const email = req.verifiedUser;
-	const index = req.body.index;
-	const item = req.body.item;
+	const items = req.body.item;
 
-	if ((index || index === 0) && item) {
-		store.mutateItem(email, index, item, (ok) => {
+	if (items) {
+		store.mutateItem(email, items, (ok) => {
 			if (ok) {
 				res.sendStatus(200);
 			} else {
@@ -284,10 +249,8 @@ const verify = (req, callback) => {
 	});
 }
 
-module.exports.addItem = addItem;
 module.exports.changePassword = changePassword;
 module.exports.deleteAccount = deleteAccount;
-module.exports.deleteItem = deleteItem;
 module.exports.forgotPassword = forgotPassword;
 module.exports.logout = logout;
 module.exports.mutateItem = mutateItem;

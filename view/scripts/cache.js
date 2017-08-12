@@ -74,6 +74,10 @@ function Cache(email, numItems) {
 					index: i
 				}));
 
+				setTimeout(() => {
+					window.location.reload();
+				}, 500);
+
 				break;
 
 			}
@@ -88,8 +92,8 @@ function Cache(email, numItems) {
 
 		this.changes.push({
 			type: NEW,
-			heading: td[0].innerText,
-			body: td[1].innerText
+			heading: td[0].textContent,
+			body: td[1].textContent
 		});
 
 		saveButton.disabled = false;
@@ -101,12 +105,10 @@ function Cache(email, numItems) {
 
 		this.changes[id] = {
 			type: MUTATE,
-			heading: tds[0].innerText,
-			body: tds[1].innerText
+			heading: tds[0].textContent,
+			body: tds[1].textContent
 		}
 
-		// TODO - should I use innerText?
-		
 		saveButton.disabled = false;
 	}
 
@@ -141,8 +143,8 @@ for (var i = 1; i < rows.length; i++) {
 		window.cache.mutate(index - 1);
 	});
 
-	cells[2].firstChild.addEventListener("keypress", () => {
-		window.cache.delete(index - 1);
+	cells[2].firstChild.addEventListener("click", () => {
+		window.cache.remove(index - 1);
 	});
 }
 

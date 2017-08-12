@@ -60,25 +60,9 @@ app.delete("/settings/delete-account", (req, res) => {
 	}
 });
 
-app.post("/add", (req, res) => {
-	if (req.verifiedUser) {
-		controller.addItem(req, res);
-	} else {
-		res.sendStatus(403);
-	}
-});
-
-app.put("/mutate", (req, res) => {
+app.post("/save", (req, res) => {
 	if (req.verifiedUser) {
 		controller.mutateItem(req, res);
-	} else {
-		res.sendStatus(403);
-	}
-});
-
-app.delete("/delete", (req, res) => {
-	if (req.verifiedUser) {
-		controller.deleteItem(req, res);
 	} else {
 		res.sendStatus(403);
 	}
