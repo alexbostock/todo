@@ -62,6 +62,7 @@
 		{{/user}}
 	</main>
 
+	{{^user}}
 	<div id="signinForm" hidden>
 		Email:
 		<input type="text" class="emailInput">
@@ -83,6 +84,7 @@
 
 		<button id="signupFormButton" class="button button-outline">Sign Up</button>
 	</div>
+	{{/user}}
 
 	<script src="scripts/ui.js"></script>
 	{{#user}}

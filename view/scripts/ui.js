@@ -45,29 +45,31 @@ if (signupButton) {
 	});
 }
 
-forgotPasswordButton.addEventListener("click", () => {
-	const xhr = new XMLHttpRequest();
+if (forgotPasswordButton) {
+	forgotPasswordButton.addEventListener("click", () => {
+		const xhr = new XMLHttpRequest();
 
-	xhr.onload = () => {
-		if (xhr.status === 200) {
-			console.log("We emailed you a link");
-		} else {
-			console.log("Account reset failed");
+		xhr.onload = () => {
+			if (xhr.status === 200) {
+				console.log("We emailed you a link");
+			} else {
+				console.log("Account reset failed");
+			}
 		}
-	}
 
-	xhr.open("POST", "./forgot-password", true);
+		xhr.open("POST", "./forgot-password", true);
 
-	xhr.setRequestHeader("Content-Type", "application/json");
+		xhr.setRequestHeader("Content-Type", "application/json");
 
-	const data = {};
+		const data = {};
 
-	const form = document.getElementById("signinForm");
+		const form = document.getElementById("signinForm");
 
-	data.user = form.getElementsByClassName("emailInput")[0].value;
+		data.user = form.getElementsByClassName("emailInput")[0].value;
 
-	xhr.send(JSON.stringify(data));
-});
+		xhr.send(JSON.stringify(data));
+	});
+}
 
 function signin() {
 	const xhr = new XMLHttpRequest();
@@ -119,8 +121,13 @@ function signup() {
 	xhr.send(JSON.stringify(data));
 }
 
-signinFormButton.addEventListener("click", signin);
-signupFormButton.addEventListener("click", signup);
+if (signinFormButton) {
+	signinFormButton.addEventListener("click", signin);
+}
+
+if (signupFormButton) {
+	signupFormButton.addEventListener("click", signup);
+}
 
 function signinKeypress(k) {
 	if (k.keyCode === 13) {
@@ -136,10 +143,14 @@ function signupKeypress(k) {
 
 var form = document.getElementById("signinForm");
 
-form.getElementsByClassName("emailInput")[0].addEventListener("keypress", signinKeypress);
-form.getElementsByClassName("passwordInput")[0].addEventListener("keypress", signinKeypress);
+if (form) {
+	form.getElementsByClassName("emailInput")[0].addEventListener("keypress", signinKeypress);
+	form.getElementsByClassName("passwordInput")[0].addEventListener("keypress", signinKeypress);
+}
 
 form = document.getElementById("signupForm");
 
-form.getElementsByClassName("emailInput")[0].addEventListener("keypress", signupKeypress);
-form.getElementsByClassName("passwordInput")[0].addEventListener("keypress", signupKeypress);
+if (form) {
+	form.getElementsByClassName("emailInput")[0].addEventListener("keypress", signupKeypress);
+	form.getElementsByClassName("passwordInput")[0].addEventListener("keypress", signupKeypress);
+}
