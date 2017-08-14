@@ -19,3 +19,7 @@ main {
 	max-width: 30em;
 	margin: auto;
 }
+
+#newButton {
+	display: block;
+}

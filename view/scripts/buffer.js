@@ -8,7 +8,7 @@ function Buffer() {
 	const tbody = document.getElementsByTagName("tbody")[0];
 	this.items = tbody.getElementsByTagName("tr");
 
-	for (let i = 0; i < this.items.length; i++) {
+	for (let i = 0; i < this.items.length - 1; i++) {
 		let cells = this.items[i].getElementsByTagName("td");
 
 		this.state.push({
@@ -62,7 +62,7 @@ function Buffer() {
 	this.update = () => {
 		let changes = this.unsavedChanges;
 
-		for (let i = 0; i < this.items.length; i++) {
+		for (let i = 0; i < this.items.length - 1; i++) {
 			let cells = this.items[i].getElementsByTagName("td");
 
 			let s = this.state[i];
@@ -96,3 +96,34 @@ setInterval(() => {
 		buffer.save();
 	}
 }, 5000);	// Auto-save every 5 seconds
+
+document.getElementById("newButton").addEventListener("click", () => {
+	const id = buffer.state.length;
+	buffer.state.push({
+		heading: "",
+		body: ""
+	});
+
+	let tr = document.createElement("tr");
+
+	let td = document.createElement("td");
+	td.setAttribute("contenteditable", true);
+	tr.appendChild(td);
+
+	td = document.createElement("td");
+	td.setAttribute("contenteditable", true);
+	tr.appendChild(td);
+
+	td = document.createElement("td");
+	let a = document.createElement("a");
+	a.className = "button button-clear deleteButton";
+	a.textContent = "Delete";
+	a.addEventListener("click", () => {
+		buffer.remove(id);
+	});
+	td.appendChild(a);
+
+	tr.appendChild(td);
+
+	tbody.insertBefore(tr, tbody.childNodes[id]);
+});
