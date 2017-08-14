@@ -84,4 +84,4 @@ module.exports.addUser = addUser;
 module.exports.changePassword = changePassword;
 module.exports.delUser = delUser;
 module.exports.getUser = getUser;
-module.exports.mutateItem = mutateItem;
+module.exports.mutateItems = mutateItems;

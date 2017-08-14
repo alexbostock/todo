@@ -62,7 +62,7 @@ app.delete("/settings/delete-account", (req, res) => {
 
 app.post("/save", (req, res) => {
 	if (req.verifiedUser) {
-		controller.mutateItem(req, res);
+		controller.mutateItems(req, res);
 	} else {
 		res.sendStatus(403);
 	}

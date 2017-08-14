@@ -115,10 +115,10 @@ const logout = (req, res) => {
 
 const mutateItems = (req, res) => {
 	const email = req.verifiedUser;
-	const items = req.body.item;
+	const items = req.body.items;
 
 	if (items) {
-		store.mutateItem(email, items, (ok) => {
+		store.mutateItems(email, items, (ok) => {
 			if (ok) {
 				res.sendStatus(200);
 			} else {
@@ -196,7 +196,7 @@ const signin = (req, res) => {
 							}
 						});
 					} else {
-						res.sendStatus(400);
+						res.sendStatus(403);
 					}
 				});
 
@@ -253,7 +253,7 @@ module.exports.changePassword = changePassword;
 module.exports.deleteAccount = deleteAccount;
 module.exports.forgotPassword = forgotPassword;
 module.exports.logout = logout;
-module.exports.mutateItem = mutateItem;
+module.exports.mutateItems = mutateItems;
 module.exports.render = render;
 module.exports.resetPassword = resetPassword;
 module.exports.resetPasswordPage = resetPasswordPage;
