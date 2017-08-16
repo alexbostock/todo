@@ -39,7 +39,7 @@ if (forgotPasswordButton) {
 
 		const data = {};
 
-		const form = document.getElementById("signinForm");
+		const form = document.getElementById("signupForm");
 
 		data.user = form.getElementsByClassName("emailInput")[0].value;
 
