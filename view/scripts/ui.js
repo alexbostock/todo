@@ -1,28 +1,11 @@
 "use strict";
 
-const addItemButton = document.getElementById("addItemButton");
-
-const signinButton = document.getElementById("signinButton");
-const signupButton = document.getElementById("signupButton");
 const signinFormButton = document.getElementById("signinFormButton");
 const signupFormButton = document.getElementById("signupFormButton");
 
 const forgotPasswordButton = document.getElementById("forgotPasswordButton");
 
 const signoutButton = document.getElementById("signoutButton");
-
-if (addItemButton) {
-	addItemButton.addEventListener("click", () => {
-		console.log("Add item");
-	});
-}
-
-if (signinButton) {
-	signinButton.addEventListener("click", () => {
-		document.getElementById("signinForm").hidden = false;
-		document.getElementById("signupForm").hidden = true;
-	});
-}
 
 if (signoutButton) {
 	signoutButton.addEventListener("click", () => {
@@ -35,13 +18,6 @@ if (signoutButton) {
 		xhr.open("POST", "./logout", true);
 
 		xhr.send();
-	});
-}
-
-if (signupButton) {
-	signupButton.addEventListener("click", () => {
-		document.getElementById("signupForm").hidden = false;
-		document.getElementById("signinForm").hidden = true;
 	});
 }
 
@@ -88,7 +64,7 @@ function signin() {
 
 	const data = {};
 
-	const form = document.getElementById("signinForm");
+	const form = document.getElementById("signupForm");
 
 	data.user = form.getElementsByClassName("emailInput")[0].value;
 	data.password = form.getElementsByClassName("passwordInput")[0].value;
@@ -141,14 +117,7 @@ function signupKeypress(k) {
 	}
 }
 
-var form = document.getElementById("signinForm");
-
-if (form) {
-	form.getElementsByClassName("emailInput")[0].addEventListener("keypress", signinKeypress);
-	form.getElementsByClassName("passwordInput")[0].addEventListener("keypress", signinKeypress);
-}
-
-form = document.getElementById("signupForm");
+const form = document.getElementById("signupForm");
 
 if (form) {
 	form.getElementsByClassName("emailInput")[0].addEventListener("keypress", signupKeypress);
