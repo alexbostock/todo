@@ -81,11 +81,11 @@ const mutateItems = (user, item, callback) => {
 }
 
 const verifyEmail = (email, callback) => {
-	getUser(user, (data) => {
+	getUser(email, (data) => {
 		if (data) {
 			data.emailVerified = true;
 
-			saveValue(user, JSON.stringify(data), callback);
+			saveValue(data, JSON.stringify(data), callback);
 		} else {
 			callback(false);
 		}

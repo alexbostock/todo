@@ -268,9 +268,10 @@ const verifyEmail = (req, res) => {
 	if (email) {
 		store.verifyEmail(email, (ok) => {
 			if (ok) {
+				res.sendStatus(200);
 				// TODO - redirect to /
 			} else {
-				res.sendStatus(500)
+				res.sendStatus(500);
 			}
 		});
 	} else {
