@@ -119,7 +119,7 @@ function signupKeypress(k) {
 
 const form = document.getElementById("signupForm");
 
-if (form) {
+/*if (form) {
 	form.getElementsByClassName("emailInput")[0].addEventListener("keypress", signupKeypress);
 	form.getElementsByClassName("passwordInput")[0].addEventListener("keypress", signupKeypress);
-}
+}*/

@@ -6,6 +6,7 @@ const sessionTokens = {};
 const lastUsed = {};
 
 const resetTokens = {};
+const verifyTokens = {};
 
 function leftPad(s, length) {
 	while (s.length < length) {
@@ -72,6 +73,14 @@ const genToken = (email, ip, callback) => {
 	});
 }
 
+const genEmailToken = (email) => {
+	const token = randomString(16) + Date.now().toString(16);
+
+	verifyTokens[token] = email;
+
+	return token;
+}
+
 const getResetToken = (email) => {
 	const token = randomString(16) + Date.now().toString(16);
 
@@ -99,6 +108,16 @@ const verify = (password, hash, callback) => {
 	passwordLib(password).verifyAgainst(hash, (err, verified) => {
 		callback(! err && verified);
 	});
+}
+
+const verifyEmail = (token) => {
+	const email = verifyTokens[token];
+
+	if (email) {
+		delete verifyTokens[token];
+	}
+
+	return email;
 }
 
 const verifyToken = (hash, ip, callback) => {
@@ -134,13 +153,16 @@ const verifyToken = (hash, ip, callback) => {
 		}
 	}
 }
+
 module.exports.checkResetToken = checkResetToken;
 module.exports.checkResetTokenExists = checkResetTokenExists;
 module.exports.deleteResetToken = deleteResetToken;
+module.exports.genEmailToken = genEmailToken;
 module.exports.getResetToken = getResetToken;
 module.exports.genToken = genToken;
 module.exports.hash = hash;
 module.exports.revokeToken = revokeToken;
 module.exports.verify = verify;
+module.exports.verifyEmail = verifyEmail;
 module.exports.verifyToken = verifyToken;
 

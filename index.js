@@ -36,6 +36,8 @@ app.get("/reset-password/:key", controller.resetPasswordPage);
 
 app.post("/reset-password/:key", controller.resetPassword);
 
+app.get("/verify-email/:key", controller.verifyEmail);
+
 app.post("/settings/change-password", (req, res) => {
 	if (req.verifiedUser) {
 		controller.changePassword(req, res);

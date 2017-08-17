@@ -213,8 +213,6 @@ const signup = (req, res) => {
 	const email = req.body.user;
 	const password = req.body.password;
 
-	// TODO - confirm email
-
 	if (email && password) {
 		store.getUser(email, (value) => {
 			if (value) {
@@ -224,7 +222,20 @@ const signup = (req, res) => {
 					if (hash) {
 						store.addUser(email, hash, (ok) => {
 							if (ok) {
-								signin(req, res);
+								const token = auth.genEmailToken(email);
+
+								const link = "https://todo.alexbostock.co.uk/verify-email/" + token;
+								
+								let message = "Please verify your email for todo.alexbostock.co.uk\n\n";
+									message += link;
+
+								mail.send(email, "Todo - Verify Email", message, (ok) => {
+									if (ok) {
+										signin(req, res);
+									} else {
+										res.sendStatus(500);
+									}
+								});
 							} else {
 								res.sendStatus(500);
 							}
@@ -249,6 +260,24 @@ const verify = (req, callback) => {
 	});
 }
 
+const verifyEmail = (req, res) => {
+	const token = req.params.key;
+
+	const email = auth.verifyEmail(token);
+
+	if (email) {
+		store.verifyEmail(email, (ok) => {
+			if (ok) {
+				// TODO - redirect to /
+			} else {
+				res.sendStatus(500)
+			}
+		});
+	} else {
+		res.sendStatus(400);
+	}
+}
+
 module.exports.changePassword = changePassword;
 module.exports.deleteAccount = deleteAccount;
 module.exports.forgotPassword = forgotPassword;
@@ -260,4 +289,5 @@ module.exports.resetPasswordPage = resetPasswordPage;
 module.exports.signin = signin;
 module.exports.signup = signup;
 module.exports.verify = verify;
+module.exports.verifyEmail = verifyEmail;
 

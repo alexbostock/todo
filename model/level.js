@@ -80,8 +80,21 @@ const mutateItems = (user, item, callback) => {
 	});
 }
 
+const verifyEmail = (email, callback) => {
+	getUser(user, (data) => {
+		if (data) {
+			data.emailVerified = true;
+
+			saveValue(user, JSON.stringify(data), callback);
+		} else {
+			callback(false);
+		}
+	});
+}
+
 module.exports.addUser = addUser;
 module.exports.changePassword = changePassword;
 module.exports.delUser = delUser;
 module.exports.getUser = getUser;
 module.exports.mutateItems = mutateItems;
+module.exports.verifyEmail = verifyEmail;
