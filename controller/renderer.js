@@ -4,7 +4,11 @@ const fileSystem = require("fs");
 
 const mustache = require("mustache");
 
-const index = fileSystem.readFileSync("./view/index.html", {encoding: "utf8"});
+const config = require("../config");
+
+const path = config.root + "/view/index.html";
+
+const index = fileSystem.readFileSync(path, {encoding: "utf8"});
 
 mustache.parse(index);
 
