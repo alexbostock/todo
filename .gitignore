@@ -60,6 +60,5 @@ typings/
 # Vim .swp files
 *.swp
 
-config.js
 data/
 

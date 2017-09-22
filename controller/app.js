@@ -234,14 +234,17 @@ const signup = (req, res) => {
 										signin(req, res);
 									} else {
 										res.sendStatus(500);
+										console.log("Failed to send email");
 									}
 								});
 							} else {
 								res.sendStatus(500);
+								console.log("Failed to store new user");
 							}
 						});
 					} else {
 						res.sendStatus(500);
+						console.log("Failed to generate hash");
 					}
 				});
 			}

@@ -2,13 +2,16 @@
 
 const email = require("emailjs");
 
-const config = require("../config");
+console.log(process.env.MAIL_USERNAME);
+console.log(process.env.MAIL_PASSWORD);
+console.log(process.env.MAIL_SERVER);
+console.log(process.env.MAIL_FROM_ADDRESS);
 
 const server = email.server.connect({
-	user: config.mailFrom,
-	password: config.mailPassword,
-	host: config.mailServer,
-	post: 587,
+	user: process.env.MAIL_USERNAME,
+	password: process.env.MAIL_PASSWORD,
+	host: process.env.MAIL_SERVER,
+	port: 587,
 	tls: true
 });
 
@@ -16,12 +19,16 @@ const send = (to, subject, body, callback) => {
 	const options = {};
 
 	options.to = to;
-	options.from = config.mailFrom;
+	options.from = process.env.MAIL_FROM_ADDRESS;
 	options.subject = subject;
 
 	options.text = body;
 	
 	server.send(options, (err, msg) => {
+		if (err) {
+			console.log(err);
+		}
+
 		callback(! Boolean(err));
 	});
 }

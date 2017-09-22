@@ -1,12 +1,11 @@
 "use strict";
 
+require("dotenv").config();
+
 const express = require("express");
 const app = express();
 
 app.enable("trust proxy");
-
-const config = require("./config.js");
-const root = config.root;
 
 const controller = require("./controller/app.js");
 
