@@ -1,14 +1,13 @@
 "use strict";
 
 const fileSystem = require("fs");
+const path = require("path");
 
 const mustache = require("mustache");
 
-const config = require("../config");
+const file = path.join(__dirname, "../view/index.html");
 
-const path = config.root + "/view/index.html";
-
-const index = fileSystem.readFileSync(path, {encoding: "utf8"});
+const index = fileSystem.readFileSync(file, {encoding: "utf8"});
 
 mustache.parse(index);
 
