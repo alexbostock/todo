@@ -14,6 +14,7 @@
     "mustache": "^2.3.0",
     "password-hash-and-salt": "^0.1.4"
   },
+  "scripts": {"start": "node index.js"},
   "repository": {
     "type": "git",
     "url": "https://github.com/alexbostock.co.uk/todo.git"
