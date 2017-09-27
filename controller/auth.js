@@ -1,5 +1,6 @@
 "use strict";
 
+const crypto = require("crypto");
 const passwordLib = require("password-hash-and-salt");
 
 const sessionTokens = {};
@@ -16,14 +17,10 @@ function leftPad(s, length) {
 	return s;
 }
 
-function randomString(length) {
-	let s = "";
-
-	while (length --> 0) {
-		s += Math.floor(Math.random() * 16).toString(16);
-	}
-
-	return s;
+function randomString(callback) {
+	crypto.randomBytes(256, (err, buf) => {
+		callback(! Boolean(err), buf.toString("hex"));
+	});
 }
 
 const checkResetToken = (email, token) => {
@@ -73,20 +70,24 @@ const genToken = (email, ip, callback) => {
 	});
 }
 
-const genEmailToken = (email) => {
-	const token = randomString(16) + Date.now().toString(16);
+const genEmailToken = (email, callback) => {
+	randomString((ok, token) => {
+		token += Date.now().toString(16);
 
-	verifyTokens[token] = email;
+		verifyTokens[token] = email;
 
-	return token;
+		callback(token);
+	});
 }
 
-const getResetToken = (email) => {
-	const token = randomString(16) + Date.now().toString(16);
+const getResetToken = (email, callback) => {
+	randomString((ok, token) => {
+		token += Date.now().toString(16);
 
-	resetTokens[token] = email;
+		resetTokens[token] = email;
 
-	return token;
+		callback(token);
+	});
 }
 
 const hash = (password, callback) => {

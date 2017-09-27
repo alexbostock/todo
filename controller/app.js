@@ -222,20 +222,20 @@ const signup = (req, res) => {
 					if (hash) {
 						store.addUser(email, hash, (ok) => {
 							if (ok) {
-								const token = auth.genEmailToken(email);
-
-								const link = "https://todo.alexbostock.co.uk/verify-email/" + token;
+								auth.genEmailToken(email, (token) => {
+									const link = "https://todo.alexbostock.co.uk/verify-email/" + token;
 								
-								let message = "Please verify your email for todo.alexbostock.co.uk\n\n";
+									let message = "Please verify your email for todo.alexbostock.co.uk\n\n";
 									message += link;
 
-								mail.send(email, "Todo - Verify Email", message, (ok) => {
-									if (ok) {
-										signin(req, res);
-									} else {
-										res.sendStatus(500);
-										console.log("Failed to send email");
-									}
+									mail.send(email, "Todo - Verify Email", message, (ok) => {
+										if (ok) {
+											signin(req, res);
+										} else {
+											res.sendStatus(500);
+											console.log("Failed to send email");
+										}
+									});
 								});
 							} else {
 								res.sendStatus(500);

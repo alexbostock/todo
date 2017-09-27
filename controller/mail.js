@@ -2,11 +2,6 @@
 
 const email = require("emailjs");
 
-console.log(process.env.MAIL_USERNAME);
-console.log(process.env.MAIL_PASSWORD);
-console.log(process.env.MAIL_SERVER);
-console.log(process.env.MAIL_FROM_ADDRESS);
-
 const server = email.server.connect({
 	user: process.env.MAIL_USERNAME,
 	password: process.env.MAIL_PASSWORD,
